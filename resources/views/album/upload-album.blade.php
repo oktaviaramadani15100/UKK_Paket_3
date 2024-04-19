@@ -147,10 +147,6 @@
             <input type="text" placeholder="Tambahkan Deskripsi" name="deskripsi_album" id="deskripsi_album">
         </div>
 
-         <div class="input-container" id="tanggal_container">
-            <label for="tanggal_unduh">Tanggal Upload</label>
-            <input type="date" name="tanggal_upload" id="tanggal_upload">
-        </div>
 
         <div class="input-container" id="foto_user_id_container">
             <label for="user_id">User_id</label>
@@ -203,7 +199,6 @@
                     document.getElementById('judul-container').style.display = 'block';
                     document.getElementById('deskripsi-container').style.display = 'block';
                     document.getElementById('button-container').style.display = 'block';
-                    document.getElementById('tanggal_container').style.display = 'block';
                     document.getElementById('foto_user_id_container').style.display = 'block';
 
 

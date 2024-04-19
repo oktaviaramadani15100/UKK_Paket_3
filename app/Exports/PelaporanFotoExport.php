@@ -4,9 +4,9 @@ namespace App\Exports;
 
 use App\Models\Foto;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+use Maatwebsite\Excel\Events\AfterSheet;
 
 class PelaporanFotoExport implements FromCollection, WithHeadings
 {
@@ -37,17 +37,28 @@ class PelaporanFotoExport implements FromCollection, WithHeadings
         ];
     }
 
-    public static function afterSheet(AfterSheet $event)
+    public function registerEvents(): array
     {
-        $event->sheet->getStyle('A1:G1')->applyFromArray([
-            'font' => [
-                'bold' => true,
-                'color' => ['rgb' => 'FFFFFF'], // warna teks putih
-            ],
-            'fill' => [
-                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                'startColor' => ['rgb' => '4285F4'], // warna latar biru
-            ],
-        ]);
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $photos = Foto::whereIn('id', $this->id)->get();
+                $row = 2;
+
+                foreach ($photos as $photo) {
+                    $imagePath = public_path('images/' . $photo->LokasiFIle);
+
+                    if (file_exists($imagePath)) {
+                        $imageFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($imagePath);
+                        $objDrawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                        $objDrawing->setName('Photo');
+                        $objDrawing->setDescription('Photo');
+                        $objDrawing->setPath($imagePath);
+                        $objDrawing->setCoordinates('E' . $row);
+                        $objDrawing->setWorksheet($event->sheet->getDelegate());
+                        $row++;
+                    }
+                }
+            },
+        ];
     }
 }

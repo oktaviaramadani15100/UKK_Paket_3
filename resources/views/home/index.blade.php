@@ -173,12 +173,11 @@
                             <span class="total-komentar">{{ $row->total_komentar }}</span>
                             <img class="hapus" src="images/delete.png" alt=""
                                 onclick="deleteImage({{ $row->id }})">
-                            <a href="{{ route('pelaporan-foto.export', $row->id) }}" download="laporan-foto.xlsx">
+                            <a href="{{ route('pelaporan-foto.export', $row->id) }}">
                                 <img class="excel-foto" src="images/excel.png" alt="">
                             </a>
                         </div>
                         <br>
-                        <p class="description">{{ $row->DeskripsiFoto }}</p>
                     </div>
                 </div>
             @endforeach

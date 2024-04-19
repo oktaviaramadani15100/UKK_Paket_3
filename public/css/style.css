@@ -2489,8 +2489,8 @@ ul.lik li a:hover {
 }
 
 .card {
-	width: 400px;
-	height: 400px;
+	width: 350px;
+	height: 350px;
 	/* Atur lebar kartu */
 	border: 1px solid #ccc;
 	border-radius: 10px;
@@ -2586,22 +2586,16 @@ img {
 	/* Jarak antara gambar */
 }
 
-.description 
-{
-	margin-top: 10px;
-}
-
-
 /* upload foto */
-.upload-card {
-	position: relative;
-	max-width: 30%;
-	/* Atur lebar maksimum agar tidak melebihi lebar layar */
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	padding: 20px;
-	margin: 0 auto;
-}
+	.upload-card {
+		position: relative;
+		max-width: 30%;
+		text-align: center;
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		padding: 20px;
+		margin: 0 auto;
+	}
 
 
 .upload-input {
@@ -2684,7 +2678,10 @@ img {
 }
 
 .button-container {
-	text-align: center;
+    display: grid;
+    place-items: center;
+	margin-top: 50px;
+	margin-left: 600px;
 }
 
 .btn {
@@ -2806,12 +2803,16 @@ img {
 	transition: border-bottom 0.3s ease;
 	text-decoration: none;
 	color: #000;
-	margin-top: 30px;
-	font-size: 20px;
+
+	border-bottom: 1px solid transparent; 
 }
 
 .upload-profile:hover {
 	border-bottom: 3px solid #000;
+}
+
+.upload-profile span{
+	font-size: 30px;
 }
 
 .gambar-upload {
@@ -3038,4 +3039,15 @@ td {
 
 tr:nth-child(even) {
 	background-color: #f2f2f2;
+}
+
+.card-album-profile {
+    overflow-x: auto; 
+}
+
+.album-profile {
+    display: flex; 
+    flex-wrap: nowrap;
+	margin-top: 50px;
+	margin-left: 50px;
 }

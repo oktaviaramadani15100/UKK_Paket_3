@@ -95,31 +95,20 @@
             <span class="profile-name">{{ Auth::user()->username }}</span>
             <span class="profile-email">{{ Auth::user()->email }}</span>
 
-        <div class="button-profile">
-            <div class="button-group">
-                <button class="share-button">Bagikan Profile</button>
-                <a href="editProfile"><button class="edit-button">Edit Profile</button></a>
-            </div>
-
-        </div>
-
         <div class="upload-profile">
             <span>Upload</span>
         </div>
 
-    <div class="content-grid">
-        <div class="grid-wrapper">
+    <div class="card-album-prpfile">
+        <div class="album-profile">
             @foreach ($datas as $items)
                 <div class="card">
-                    <a href="{{ route('detail', ['id' => $items->id]) }}"><img src="{{ asset('upload/' . $items->foto) }}" alt=""></a>
+                    <a href="{{ route('detail', ['id' => $items->id]) }}"><img src="{{ asset('upload/' . $items->foto) }}" alt="" style="width: 200px; margin-left:65px; margin-top: 30px"></a>
                     <div class="intro">
                         <h1>{{ $items->NamaAlbum }}</h1>
-
                         <a href="{{ route('laporan.export',  $items->id) }}" download="pelapor.xlsx">
                             <img class="excel" src="images/excel.png" alt="Excel Icon">
                         </a>
-
-                        
                     </div>
                 </div>
             @endforeach

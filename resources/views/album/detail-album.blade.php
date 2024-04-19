@@ -7,52 +7,45 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
+
     <style>
         .container-detail {
             display: flex;
             flex-direction: column;
-            /* Tampilan vertikal */
-            align-items: center;
-            /* Memusatkan elemen secara horizontal */
-            text-align: center;
-            /* Memusatkan teks di dalam card-detail */
+            margin-top: 20px
         }
 
         .card-detail {
             display: flex;
-            width: 80%;
-            /* Mengatur lebar maksimum kartu */
-            max-width: 800px;
-            /* Atur lebar maksimum kartu */
+            width: 600px;
+            height: 300px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* Efek bayangan */
-            margin-top: 50px
+            margin-top: 50px;
+            margin-left: 450px
         }
 
         .card-detail .image {
             flex: 1;
         }
 
-        .card-detail .image img {
-            width: 59%;
-            display: block;
-            border-radius: 12px 0 0 12px;
+        .card-detail img {
+            width: 200px;
+            height: 200px;
             margin-left: 50px;
+            margin-top: 40px
         }
 
         .card-detail .details {
             flex: 1;
             padding: 20px;
             box-sizing: border-box;
-            background-color: #fff;
         }
 
         .card-detail .details h2 {
-            margin-top: 0;
-            text-align: center;
-            font-size: 30px
+            margin-top: 10px;
+            font-size: 30px;
         }
 
         .card-detail .details p {
@@ -61,39 +54,65 @@
         }
 
         .card {
-            width: 300px;
-            border: 1px solid #ccc;
+            width: 250px;
+            height: 250px;
             border-radius: 10px;
             overflow: hidden;
-            margin-top: 50px;
-            position: relative;
-            margin-right: 20px;
-            margin-left: 20px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 6px rgba(2, 1, 1, 3);
-            align-items: flex-start;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-left: 40px;
         }
 
         .card img {
-            width: 200px;
-            /* Gambar mengisi seluruh lebar kartu */
+            width: 150px;
             height: auto;
-            /* Gambar disesuaikan tingginya secara proporsional */
             border-radius: 12px 12px 0 0;
-            /* Sudut bulat hanya pada bagian atas kartu */
+            margin-top: 50px;
+            margin-left: 50px;
         }
 
         .card-container {
-        display: flex; /* Menyusun div secara horizontal */
-        flex-wrap: wrap; /* Mengizinkan pembungkusan pada baris yang baru jika ruang tidak mencukupi */
-        justify-content: flex-start;
-    }
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding: 10px;
+            margin-top: 50px;
+        }
 
+
+        .logo-back {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logo-back:hover {
+            background-color: #a8a6a6;
+        }
+
+        .logo-back a {
+            color: inherit;
+            /* Mengambil warna teks dari induknya */
+            text-decoration: none;
+            /* Menghapus garis bawah */
+        }
+
+        .logo-back,
+        .container-detail {
+            display: inline-block;
+            vertical-align: top;
+        }
     </style>
 </head>
 
 <body>
+    <div class="logo-back">
+        <a href="{{ route('profile') }}">
+            <h1>Back</h1>
+        </a>
+    </div>
+
     <div class="container-detail">
         <div class="card-detail">
             <div class="image">

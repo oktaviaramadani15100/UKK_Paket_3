@@ -9,6 +9,7 @@ use App\Models\Album;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Row;
 
 class AlbumController extends Controller
 {
@@ -26,7 +27,6 @@ class AlbumController extends Controller
                 'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'judul_album' => 'required|string|max:255',
                 'deskripsi_album' => 'nullable|string',
-                'tanggal_upload' => 'required|date',
                 'user_id' => 'required|exists:users,id',
             ]);
 
@@ -38,7 +38,7 @@ class AlbumController extends Controller
                 $data->foto = $file;
                 $data->NamaAlbum = $request->judul_album;
                 $data->Deskripsi = $request->deskripsi_album;
-                $data->TanggalDibuat = $request->tanggal_upload;
+                $data->TanggalDibuat = now();
                 $data->user_id = $request->user_id;
 
                 $data->save();
@@ -59,9 +59,21 @@ class AlbumController extends Controller
 
     public function detail($id)
     {
+
+        // Temukan album dengan ID yang diberikan
         $album = Album::find($id);
-        $fotos = Foto::where('album_id', $album->id)->get();
-        return view('album.detail-album', compact('album', 'fotos'));
+
+        // Periksa apakah album ditemukan
+        if ($album) {
+            // Jika album ditemukan, cari semua foto yang terkait dengan album tersebut
+            $fotos = Foto::where('album_id', $album->id)->get();
+
+            // Kembalikan view dengan album dan foto yang ditemukan
+            return view('album.detail-album', compact('album', 'fotos'));
+        } else {
+            // Jika album tidak ditemukan, kembalikan redirect atau tampilkan pesan kesalahan
+            return redirect()->back()->with('error', 'Album not found');
+        }
     }
 
     public function pelaporan($id)

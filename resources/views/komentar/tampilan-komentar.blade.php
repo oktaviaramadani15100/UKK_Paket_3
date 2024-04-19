@@ -13,6 +13,7 @@
             display: flex;
             justify-content: center;
             margin-top: 100px;
+            margin-left: 400px;
         }
 
         .card-komentar {
@@ -118,10 +119,42 @@
             cursor: pointer;
             /* Ubah cursor menjadi pointer saat dihover */
         }
+
+        .logo-back {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+        }
+
+        .logo-back:hover {
+            background-color: #a8a6a6;
+        }
+
+        .logo-back a {
+            color: inherit;
+            /* Mengambil warna teks dari induknya */
+            text-decoration: none;
+            /* Menghapus garis bawah */
+        }
+
+        .logo-back,
+        .container-komentar {
+            display: inline-block;
+            vertical-align: top;
+        }
     </style>
 </head>
 
 <body>
+    <div class="logo-back">
+        <a href="{{ route('home') }}">
+            <h1>Back</h1>
+        </a>
+    </div>
+
     <div class="container-komentar">
         <div class="card-komentar">
             <div class="gambar-info">
@@ -157,7 +190,9 @@
 
         </div>
     </div>
-
+    <br>
+    <br>
+    <br>
 
 </body>
 

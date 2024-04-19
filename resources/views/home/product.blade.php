@@ -123,18 +123,17 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="input-container" id="judul-container" style="display: none;">
+    
+        <div class="input-container" id="judul-container">
             <label for="judul_foto" class="input-label">Judul Foto</label>
             <input type="text" placeholder="Tambahkan Judul" name="judul_foto" id="judul_foto">
         </div>
-
-        <div class="input-container" id="deskripsi-container" style="display: none;">
+    
+        <div class="input-container" id="deskripsi-container">
             <label for="deskripsi_foto" class="input-label">Deskripsi Foto</label>
             <input type="text" placeholder="Tambahkan Deskripsi" name="deskripsi_foto" id="deskripsi_foto">
         </div>
-
+    
         <div class="input-container" id="foto_album_id_container">
             <label for="album_id" class="input-label">Album_id</label>
             <select name="album_id" id="album_id">
@@ -143,16 +142,13 @@
                 @endforeach
             </select>
         </div>
-
-        <div class="input-container" id="foto_user_id_container" sty>
-            <label for="user_id">User_id</label>
-            <select name="user_id" id="user_id"></select>
-        </div>
-
+    
         <div class="button-container" id="button-container" style="display: none;">
             <input type="submit" class="btn">
         </div>
     </form>
+    
+
 
 
 
@@ -191,10 +187,7 @@
                     document.getElementById('judul-container').style.display = 'block';
                     document.getElementById('deskripsi-container').style.display = 'block';
                     document.getElementById('button-container').style.display = 'block';
-                    document.getElementById('tanggal_container').style.display = 'block';
                     document.getElementById('foto_album_id_container').style.display = 'block';
-                    document.getElementById('foto_user_id_container').style.display = 'block';
-
 
                     // Membaca file gambar menggunakan FileReader
                     var reader = new FileReader();

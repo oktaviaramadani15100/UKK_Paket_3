@@ -26,7 +26,6 @@ class FotoController extends Controller
             $request->validate([
                 'judul_foto' => 'required|string|max:255',
                 'deskripsi_foto' => 'nullable|string',
-                'tanggal_unduh' => 'required|date',
                 'album_id' => 'required|exists:albums,id',
                 'LokasiFIle' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
