@@ -154,7 +154,7 @@
                 @foreach ($user as $id => $username)
                     <option value="{{ $id }}">{{ $username }}</option>
                 @endforeach
-            </select>
+            </select>   
         </div>
 
         <div class="button-container" id="button-container" style="display: none;">

@@ -59,19 +59,12 @@ class AlbumController extends Controller
 
     public function detail($id)
     {
-
-        // Temukan album dengan ID yang diberikan
         $album = Album::find($id);
-
-        // Periksa apakah album ditemukan
         if ($album) {
-            // Jika album ditemukan, cari semua foto yang terkait dengan album tersebut
             $fotos = Foto::where('album_id', $album->id)->get();
 
-            // Kembalikan view dengan album dan foto yang ditemukan
             return view('album.detail-album', compact('album', 'fotos'));
         } else {
-            // Jika album tidak ditemukan, kembalikan redirect atau tampilkan pesan kesalahan
             return redirect()->back()->with('error', 'Album not found');
         }
     }

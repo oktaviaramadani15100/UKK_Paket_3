@@ -166,7 +166,9 @@
                         <div class="actions">
                             <img class="like" src="images/like.png" alt=""
                                 onclick="toggleLike(this, {{ $row->id }}, {{ auth()->id() }})">
-                            <span class="like-count-{{ $row->id }}">{{ $row->total_likes }}</span>
+                            <span class="like-count like-count-{{ $row->id }}">{{ $row->total_likes }}</span>
+
+
                             <a href="{{ route('tampilanKomentar', ['id' => $row->id]) }}" class="komentar-link">
                                 <img class="komen" src="images/coment.png" alt="">
                             </a>
