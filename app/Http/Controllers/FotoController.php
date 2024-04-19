@@ -7,6 +7,7 @@ use App\Models\Album;
 use App\Models\LikeFoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class FotoController extends Controller
@@ -42,7 +43,7 @@ class FotoController extends Controller
                 $data->LokasiFIle = $fileName;
                 $data->JudulFoto = $request->judul_foto;
                 $data->DeskripsiFoto = $request->deskripsi_foto;
-                $data->TanggalUngguh = $request->tanggal_unduh;
+                $data->TanggalUngguh = now();
                 $data->album_id = $request->album_id;
                 $data->user_id = auth()->user()->id;
                 // Simpan data ke database
@@ -84,21 +85,20 @@ class FotoController extends Controller
         }
     }
 
-    public function delete($id)
-    {
-        $gambar = Foto::find($id);
-        if (!$gambar) {
-            return redirect()->back()->with('error', 'Gambar tidak ditemukan.');
-        }
-
-        if ($gambar->user_id != auth()->id()) {
-            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menghapus gambar ini.');
-        }
-
-        Storage::delete($gambar->LokasiFIle);
-
-        $gambar->delete();          
-
-        return redirect()->back()->with('success', 'Gambar berhasil dihapus.');
+    public function delete(Request $request, $id)
+{
+    $gambar = Foto::find($id);
+    if (!$gambar) {
+        return response()->json(['error' => 'Gambar tidak ditemukan.'], 404);
     }
+
+    if ($gambar->user_id != Auth::id()) {
+        return response()->json(['error' => 'Anda tidak memiliki izin untuk menghapus gambar ini.'], 403);
+    }
+
+    Storage::delete($gambar->LokasiFIle);
+    $gambar->delete();
+
+    return response()->json(['success' => 'Gambar berhasil dihapus.'], 200);
+}
 }

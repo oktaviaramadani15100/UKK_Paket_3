@@ -56,7 +56,6 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li> <a href="home">Home</a> </li>
-                                    <li> <a href="blogGallery"> Gallery</a> </li>
                                     <li> <a href="album">Upload</a> </li>
                                     <li class="active"> <a href="profilegallery">Profile</a></li>
                                 </ul>
@@ -115,6 +114,12 @@
                     <a href="{{ route('detail', ['id' => $items->id]) }}"><img src="{{ asset('upload/' . $items->foto) }}" alt=""></a>
                     <div class="intro">
                         <h1>{{ $items->NamaAlbum }}</h1>
+
+                        <a href="{{ route('laporan.export',  $items->id) }}" download="pelapor.xlsx">
+                            <img class="excel" src="images/excel.png" alt="Excel Icon">
+                        </a>
+
+                        
                     </div>
                 </div>
             @endforeach

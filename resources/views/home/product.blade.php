@@ -57,7 +57,6 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li> <a href="home">Home</a> </li>
-                                    <li> <a href="blogGallery"> Gallery</a> </li>
                                     <li class="active"> <a href="uploadGallery">Upload</a> </li>
                                     <li> <a href="profilegallery">Profile</a></li>
                                 </ul>
@@ -127,22 +126,17 @@
 
 
         <div class="input-container" id="judul-container" style="display: none;">
-            <label for="judul_foto">Judul Foto</label>
+            <label for="judul_foto" class="input-label">Judul Foto</label>
             <input type="text" placeholder="Tambahkan Judul" name="judul_foto" id="judul_foto">
         </div>
 
         <div class="input-container" id="deskripsi-container" style="display: none;">
-            <label for="deskripsi_foto">Deskripsi Foto</label>
+            <label for="deskripsi_foto" class="input-label">Deskripsi Foto</label>
             <input type="text" placeholder="Tambahkan Deskripsi" name="deskripsi_foto" id="deskripsi_foto">
         </div>
 
-        <div class="input-container" id="tanggal_container">
-            <label for="tanggal_unduh">Tanggal Unduh</label>
-            <input type="date" name="tanggal_unduh" id="tanggal_unduh">
-        </div>
-
         <div class="input-container" id="foto_album_id_container">
-            <label for="album_id">Album_id</label>
+            <label for="album_id" class="input-label">Album_id</label>
             <select name="album_id" id="album_id">
                 @foreach ($albums as $id => $NamaAlbum)
                     <option value="{{ $id }}">{{ $NamaAlbum }}</option>
@@ -150,7 +144,7 @@
             </select>
         </div>
 
-        <div class="input-container" id="foto_user_id_container">
+        <div class="input-container" id="foto_user_id_container" sty>
             <label for="user_id">User_id</label>
             <select name="user_id" id="user_id"></select>
         </div>

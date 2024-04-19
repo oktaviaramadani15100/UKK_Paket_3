@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PelaporanExport;
 use App\Models\Foto;
 use App\Models\User;
 use App\Models\Album;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AlbumController extends Controller
 {
@@ -59,6 +61,12 @@ class AlbumController extends Controller
     {
         $album = Album::find($id);
         $fotos = Foto::where('album_id', $album->id)->get();
-        return view('album.detail-album', compact('album', 'fotos'));   
+        return view('album.detail-album', compact('album', 'fotos'));
+    }
+
+    public function pelaporan($id)
+    {
+        $pelaporan = Album::findOrFail($id);
+        return Excel::download(new PelaporanExport($id), "pelapor.xlsx");
     }
 }

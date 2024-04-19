@@ -55,7 +55,7 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li> <a href="home">Home</a> </li>
-                                    <li class="active"> <a href="blogGallery"> Gallery</a> </li>
+                                    <li class="active"> <a href="blogGallery">Pelaporan</a> </li>
                                     <li> <a href="uploadGallery">Upload</a> </li>
                                     <li><a href="profilegallery">Profile</a></li>
                                 </ul>
@@ -104,19 +104,33 @@
 
     </div>
     <!-- data galery -->
-        <div class="container-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Gambar</th>
-                        <th>Title</th>
-                        <th>Deskripsi</th>
-                        <th>Tanggal</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+    <!-- data galery -->
+    <div class="container-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Gambar</th>
+                    <th>Title</th>
+                    <th>Deskripsi</th>
+                    <th>Tanggal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> <img src="{{ asset('upload/' . $laporan->LokasiFIle) }}" alt=""> </td>
+                    <td>{{ $laporan->JudulFoto }}</td>
+                    <td>{{ $laporan->DeskripsiFoto }}</td>
+                    <td>{{ $laporan->TanggalUngguh }}</td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     <br>
     <br>
     <!-- end data galery -->

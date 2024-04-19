@@ -57,7 +57,6 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li class="active"> <a href="home">Home</a> </li>
-                                    <li> <a href="blogGallery"> Gallery</a> </li>
                                     <li> <a href="uploadGallery">Upload</a> </li>
                                     <li> <a href="profilegallery">Profile</a></li>
                                 </ul>
@@ -130,7 +129,7 @@
         </div>
     </div>
 
-    <div id="modal" class="modal">
+    {{-- <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <div class="image-info">
@@ -147,29 +146,38 @@
             <form action="{{ route('storeKomentar') }}" method="POST" enctype="multipart/form-data" id="comment-form"
                 class="form-coment">
                 @csrf
-                <input type="hidden" name="foto_id" id="foto_id" value="" required/>
+                <input type="hidden" name="foto_id" id="foto_id" value="" required />
                 <h2>Komentar</h2>
-                <input class="komen" type="text" name="isi_komentar" id="isi_komentar" placeholder="Tambahkan komentar" required/>
+                <input class="komen" type="text" name="isi_komentar" id="isi_komentar"
+                    placeholder="Tambahkan komentar" required />
                 <button type="submit">Kirim Komentar</button>
             </form>
         </div>
-    </div>
+    </div> --}}
 
     <div class="content-grid">
-        <div class="grid-wrapper">
+        <div class="grid-wrapper" style="margin-left: 130px">
             @foreach ($data as $row)
                 <div class="card">
-                    <img src="{{ asset('upload/' . $row->LokasiFIle) }}" alt=""
-                        onclick="openModal('{{ $row->NamaAlbum }}', '{{ $row->Deskripsi }}', {{ $row->id }})">
+                    <img class="foto-file" src="{{ asset('upload/' . $row->LokasiFIle) }}" alt=""
+                        style="width: 200px; display: block; margin: 0 auto; margin-top: 20px">
                     <div class="intro">
                         <h1>{{ $row->JudulFoto }}</h1>
                         <div class="actions">
                             <img class="like" src="images/like.png" alt=""
                                 onclick="toggleLike(this, {{ $row->id }}, {{ auth()->id() }})">
                             <span class="like-count-{{ $row->id }}">{{ $row->total_likes }}</span>
+                            <a href="{{ route('tampilanKomentar', ['id' => $row->id]) }}" class="komentar-link">
+                                <img class="komen" src="images/coment.png" alt="">
+                            </a>
+                            <span class="total-komentar">{{ $row->total_komentar }}</span>
                             <img class="hapus" src="images/delete.png" alt=""
                                 onclick="deleteImage({{ $row->id }})">
+                            <a href="{{ route('pelaporan-foto.export', $row->id) }}" download="laporan-foto.xlsx">
+                                <img class="excel-foto" src="images/excel.png" alt="">
+                            </a>
                         </div>
+                        <br>
                         <p class="description">{{ $row->DeskripsiFoto }}</p>
                     </div>
                 </div>
@@ -208,6 +216,7 @@
                 $(this).removeClass('transition');
             });
 
+
         });
 
         function toggleLike(element, fotoId, userId) {
@@ -218,21 +227,18 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    user_id: userId,
-                    foto_id: fotoId
+                    user_id: userId
                 },
                 success: function(response) {
-                    var likeCountElement = $('.like-count-' + fotoId); // Simpan elemen like count di variabel
+                    var likeCountElement = $('.like-count-' + fotoId);
 
                     if (response.status === 'liked') {
-                        element.classList.add(
-                            'liked'); // Tambahkan kelas 'liked' untuk mengubah tampilan gambar
-                        likeCountElement.text(response.total_likes); // Update jumlah total like di frontend
+                        element.classList.add('liked');
                     } else if (response.status === 'unliked') {
-                        element.classList.remove(
-                            'liked'); // Hapus kelas 'liked' untuk mengembalikan tampilan gambar
-                        likeCountElement.text(response.total_likes); // Update jumlah total like di frontend
+                        element.classList.remove('liked');
                     }
+
+                    likeCountElement.text(response.total_likes);
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
@@ -240,139 +246,88 @@
             });
         }
 
-        // function sendCommentToServer(comment) {
-        //     const fotoId = "{{ $row->id }}";
-        //     const userId = "{{ auth()->id() }}";
 
-        //     fetch('storeKomentar', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        //             },
-        //             body: JSON.stringify({
-        //                 IsiKomentar: comment,
-        //                 user_id: userId,
-        //                 foto_id: fotoId
-        //             })
-        //         })
-        //         .then(response => {
-        //             console.log(response);
-        //             if (!response.ok) {
-        //                 return response.text().then(text => {
-        //                     throw new Error(text);
-        //                 });
-        //             }
-        //             return response.json();
-        //         })
-        //         .then(data => {
-        //             Swal.fire('Komentar berhasil disimpan', '', 'success');
-        //         })
-        //         .catch(error => {
-        //             console.error('Terjadi kesalahan:', error.message);
-        //             Swal.fire('Terjadi kesalahan', error.message, 'error');
-        //         });
-        // }
 
-        function showDescription(card) {
-            var description = card.querySelector('.description');
-            if (description.style.display === 'block') {
-                description.style.display = 'none';
-            } else {
-                description.style.display = 'block';
-            }
-        }
 
         function deleteImage(id) {
-            // Mendapatkan token CSRF dari meta tag di dalam halaman
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            // Mengirim permintaan DELETE dengan menggunakan token CSRF
-            fetch('/delete/' + id, {
-                    method: 'DELETE',
+            if (confirm("Apakah Anda yakin ingin menghapus gambar ini?")) {
+                $.ajax({
+                    url: '/delete/' + id,
+                    type: 'DELETE',
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken, // Menetapkan token CSRF di sini
-                        'Content-Type': 'application/json'
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Gagal menghapus gambar');
+                    success: function(response) {
+                        alert(response.success);
+                        location.reload(); // Ini akan me-refresh halaman saat ini
+                    },
+                    error: function(xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                        alert(err.error);
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    // Hapus elemen HTML dari DOM
-                    var cardToDelete = document.querySelector('.card[data-id="' + id + '"]');
-                    if (cardToDelete) {
-                        cardToDelete.remove();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
                 });
-        }
-
-
-
-        // Open the modal with image details
-        function openModal(albumName, description, fotoId) {
-            var modal = document.getElementById('modal');
-            var modalImage = document.getElementById('modal-image');
-            var modalAlbumName = document.getElementById('modal-album-name');
-            var modalDescription = document.getElementById('modal-description');
-            var fotoIdInput = document.getElementById('foto_id');
-
-            modalImage.src = event.target.src;
-            modalAlbumName.innerText = albumName;
-            modalDescription.innerText = description;
-
-            // Set nilai foto_id pada input tersembunyi
-            fotoIdInput.value = fotoId;
-
-            modal.style.display = 'block';
-        }
-
-
-        // Close the modal
-        function closeModal() {
-            var modal = document.getElementById('modal');
-            modal.style.display = 'none';
-        }
-
-        // Close the modal when clicking outside of it
-        window.onclick = function(event) {
-            var modal = document.getElementById('modal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
             }
         }
 
-        // Fungsi untuk menangani pengiriman formulir komentar
-        function handleSubmit(event) {
-            event.preventDefault(); // Menghentikan perilaku bawaan dari formulir
 
-            // Tangkap nilai komentar dari input formulir
-            var commentInput = document.getElementById('isi_komentar');
-            var commentText = commentInput.value;
+        // // Open the modal with image details
+        // function openModal(albumName, description, fotoId) {
+        //     var modal = document.getElementById('modal');
+        //     var modalImage = document.getElementById('modal-image');
+        //     var modalAlbumName = document.getElementById('modal-album-name');
+        //     var modalDescription = document.getElementById('modal-description');
+        //     var fotoIdInput = document.getElementById('foto_id');
 
-            // Buat elemen HTML baru untuk menampilkan komentar baru
-            var commentElement = document.createElement('li');
-            var commentTextNode = document.createTextNode(commentText);
-            commentElement.appendChild(commentTextNode);
+        //     modalImage.src = event.target.src;
+        //     modalAlbumName.innerText = albumName;
+        //     modalDescription.innerText = description;
 
-            // Temukan daftar komentar
-            var commentsList = document.getElementById('modal-comments');
+        //     // Set nilai foto_id pada input tersembunyi
+        //     fotoIdInput.value = fotoId;
 
-            // Tambahkan komentar baru ke dalam daftar komentar
-            commentsList.appendChild(commentElement);
+        //     modal.style.display = 'block';
+        // }
 
-            // Kosongkan nilai input komentar setelah dikirim
-            commentInput.value = '';
-        }
 
-        // Event listener untuk formulir komentar
-        document.getElementById('comment-form').addEventListener('submit', handleSubmit);
+        // // Close the modal
+        // function closeModal() {
+        //     var modal = document.getElementById('modal');
+        //     modal.style.display = 'none';
+        // }
+
+        // // Close the modal when clicking outside of it
+        // window.onclick = function(event) {
+        //     var modal = document.getElementById('modal');
+        //     if (event.target == modal) {
+        //         modal.style.display = 'none';
+        //     }
+        // }
+
+        // // Fungsi untuk menangani pengiriman formulir komentar
+        // function handleSubmit(event) {
+        //     event.preventDefault(); // Menghentikan perilaku bawaan dari formulir
+
+        //     // Tangkap nilai komentar dari input formulir
+        //     var commentInput = document.getElementById('isi_komentar');
+        //     var commentText = commentInput.value;
+
+        //     // Buat elemen HTML baru untuk menampilkan komentar baru
+        //     var commentElement = document.createElement('li');
+        //     var commentTextNode = document.createTextNode(commentText);
+        //     commentElement.appendChild(commentTextNode);
+
+        //     // Temukan daftar komentar
+        //     var commentsList = document.getElementById('modal-comments');
+
+        //     // Tambahkan komentar baru ke dalam daftar komentar
+        //     commentsList.appendChild(commentElement);
+
+        //     // Kosongkan nilai input komentar setelah dikirim
+        //     commentInput.value = '';
+        // }
+
+        // // Event listener untuk formulir komentar
+        // document.getElementById('comment-form').addEventListener('submit', handleSubmit);
     </script>
 </body>
 

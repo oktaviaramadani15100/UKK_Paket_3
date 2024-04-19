@@ -28,8 +28,7 @@
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             /* Efek bayangan */
-
-            margin-bottom: 20px;
+            margin-top: 50px
         }
 
         .card-detail .image {
@@ -37,10 +36,10 @@
         }
 
         .card-detail .image img {
-            width: 100%;
+            width: 59%;
             display: block;
             border-radius: 12px 0 0 12px;
-            /* Mengatur sudut bulat pada gambar */
+            margin-left: 50px;
         }
 
         .card-detail .details {
@@ -58,39 +57,39 @@
 
         .card-detail .details p {
             margin-bottom: 0;
-            margin-left: 120px;
             font-size: 18px
         }
 
         .card {
             width: 300px;
-            /* Atur lebar kartu */
             border: 1px solid #ccc;
             border-radius: 10px;
             overflow: hidden;
-            /* Mengatasi masalah overflow gambar */
-            margin-bottom: 20px;
+            margin-top: 50px;
             position: relative;
-            /* Membuat posisi relatif agar child elements bisa diatur posisinya */
             margin-right: 20px;
-            /* Atur jarak antara kartu-kartu */
             margin-left: 20px;
-            /* Atur jarak antara kartu-kartu */
             display: flex;
-            /* Atur kartu menjadi flexbox */
             flex-direction: column;
-            /* Tumpuk elemen-elemen di dalam kartu secara vertikal */
             box-shadow: 0 4px 6px rgba(2, 1, 1, 3);
+            align-items: flex-start;
         }
 
         .card img {
-            width: 25%;
+            width: 200px;
             /* Gambar mengisi seluruh lebar kartu */
             height: auto;
             /* Gambar disesuaikan tingginya secara proporsional */
             border-radius: 12px 12px 0 0;
             /* Sudut bulat hanya pada bagian atas kartu */
         }
+
+        .card-container {
+        display: flex; /* Menyusun div secara horizontal */
+        flex-wrap: wrap; /* Mengizinkan pembungkusan pada baris yang baru jika ruang tidak mencukupi */
+        justify-content: flex-start;
+    }
+
     </style>
 </head>
 
@@ -107,11 +106,13 @@
         </div>
 
 
-        @foreach ($fotos as $foto)
-            <div class="card">
-                <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
-            </div>
-        @endforeach
+        <div class="card-container">
+            @foreach ($fotos as $foto)
+                <div class="card">
+                    <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
+                </div>
+            @endforeach
+        </div>
 
     </div>
 

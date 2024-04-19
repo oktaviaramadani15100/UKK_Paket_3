@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Foto;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function blog()
+    public function index($id)
     {
-        return view('home.blog');
+        $laporan = Foto::find($id);
+        return view('home.pelaporan', compact('laporan'));
     }
 }

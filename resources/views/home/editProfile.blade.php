@@ -53,7 +53,6 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li> <a href="/">Home</a> </li>
-                                    <li> <a href="blogGallery"> Gallery</a> </li>
                                     <li> <a href="uploadGallery">Upload</a> </li>
                                     <li> <a href="profilegallery">Profile</a></li>
                                 </ul>

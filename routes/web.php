@@ -34,6 +34,7 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     //home
     Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('/pelaporan-foto/export/{id}', [HomeController::class, 'pelaporan'])->name('pelaporan-foto.export');
 
     //end home
 
@@ -48,11 +49,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('album', [AlbumController::class, 'index'])->name('album');
     Route::post('storeAlbumGallery', [AlbumController::class, 'store'])->name('storeAlbumGallery');
     Route::get('detail/{id}', [AlbumController::class, 'detail'])->name('detail');
+    Route::get('/pelaporan/export/{id}', [AlbumController::class, 'pelaporan'])->name('laporan.export');
     //end album
 
     //komentarfoto
     Route::get('komentarfoto', [KomentarFotoController::class, 'index'])->name('komentarfoto');
     Route::post('storeKomentar', [KomentarFotoController::class, 'store'])->name('storeKomentar');
+    Route::get('tampilanKomentar/{id}', [KomentarFotoController::class, 'tampilan'])->name('tampilanKomentar');
+    Route::delete('deleteComent/{id}', [KomentarFotoController::class, 'delete'])->name('deleteComent');
     //end komentarfoto
 
     //likefoto
@@ -60,7 +64,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/like/{id}', [LikeFotoController::class, 'toggleLike'])->name('like.toggle');
     //end likefoto
 
-    Route::get('blogGallery', [BlogController::class, 'blog'])->name('blog');
+
+    //pelaporan
+    Route::get('pelaporan/{id}', [BlogController::class, 'index'])->name('pelaporan');
 
     //profile
     Route::get('profilegallery', [ProfileController::class, 'profile'])->name('profile');

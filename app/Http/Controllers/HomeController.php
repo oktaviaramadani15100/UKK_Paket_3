@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PelaporanFotoExport;
 use App\Models\Foto;
 use App\Models\LikeFoto;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -28,5 +30,11 @@ class HomeController extends Controller
     {
         $data = Foto::all();
         return view('home.index', compact('data'));
+    }
+
+    public function pelaporan($id)
+    {
+        $laporan = Foto::findOrFail($id);
+        return Excel::download(new PelaporanFotoExport($id), "laporan-foto.xlsx");
     }
 }

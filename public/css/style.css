@@ -51,6 +51,7 @@ body {
 	line-height: 1.80857;
 	font-weight: normal;
 	overflow-x: hidden;
+
 }
 
 a {
@@ -1069,7 +1070,7 @@ a.readmore_bt {
 
 .main-menu ul>li .sub-down li a {
 	color: #114c7d;
-	font-size: 15px;
+	font-size: 20px;
 	text-transform: capitalize;
 	font-weight: 300;
 	padding: 12px 5px;
@@ -2488,7 +2489,8 @@ ul.lik li a:hover {
 }
 
 .card {
-	width: 300px;
+	width: 400px;
+	height: 400px;
 	/* Atur lebar kartu */
 	border: 1px solid #ccc;
 	border-radius: 10px;
@@ -2508,17 +2510,7 @@ ul.lik li a:hover {
 	box-shadow: 0 4px 6px rgba(2, 1, 1, 3);
 }
 
-.description {
-	display: none;
-	/* Sembunyikan deskripsi secara default */
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: rgba(255, 255, 255, 0.9);
-	padding: 10px;
-	transition: opacity 0.3s ease;
-}
+
 
 
 .card span {
@@ -2549,7 +2541,6 @@ img {
 	width: 30px;
 	height: auto;
 	margin-left: auto;
-	/* Memindahkan gambar like ke kanan secara otomatis */
 }
 
 .grid-wrapper {
@@ -2562,6 +2553,7 @@ img {
 	/* Mulai tata letak kartu dari atas */
 }
 
+
 .intro {
 	padding: 20px;
 	background-color: white;
@@ -2569,13 +2561,17 @@ img {
 	border-radius: 0 0 10px 10px;
 	display: flex;
 	flex-wrap: wrap;
-	/* Memastikan konten di dalam intro dapat berjajar */
-	align-items: flex-start;
+	align-items: center;
+	margin-top: 25px;
 }
 
 .intro h1 {
 	flex: 5;
-	/* Menggunakan fleksibilitas untuk memaksa teks username tetap di sebelah kiri */
+	margin-right: 10px;
+}
+
+.intro .excel{
+	width: 40px;
 }
 
 .actions img {
@@ -2590,12 +2586,10 @@ img {
 	/* Jarak antara gambar */
 }
 
-
-
-
-
-
-
+.description 
+{
+	margin-top: 10px;
+}
 
 
 /* upload foto */
@@ -2659,25 +2653,22 @@ img {
 
 .input-container {
 	display: none;
-	flex-direction: column;
-	position: relative;
-	margin-left: 30%;
-	margin-top: 30px;
-}
-
-.input-container input {
-	width: 100%;
-	padding: 8px;
-	margin-bottom: 10px;
+    flex-direction: column;
+    margin-top: 30px;
+	align-items: center;
+	margin-left: 600px;
 }
 
 .input-label {
 	margin-top: 8px;
 	font-size: 20px;
 	color: #000;
+	margin-bottom: 5px;
+	align-items: center;
 }
 
-.input-container input {
+.input-container input,
+.input-container select {
 	width: 100%;
 	padding: 8px;
 	margin-bottom: 10px;
@@ -2688,6 +2679,8 @@ img {
 	width: 50%;
 	box-sizing: border-box;
 	margin-top: 10px;
+	display: block;
+	align-items: center;
 }
 
 .button-container {
@@ -2965,91 +2958,84 @@ img {
 
 /* Modal */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 10; /* Lower z-index value for the modal */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
+	display: none;
+	position: fixed;
+	z-index: 10;
+	/* Lower z-index value for the modal */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.8);
 }
 
 .modal-content {
-    position: relative; /* Membuat posisi relatif untuk menetapkan posisi absolut tombol tutup */
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-    border-radius: 10px;
+	position: relative;
+	/* Membuat posisi relatif untuk menetapkan posisi absolut tombol tutup */
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	border-radius: 10px;
 }
 
 .close {
 	color: #aaa;
-    position: absolute; /* Mengatur posisi absolut untuk menempatkannya di luar konten */
-    top: 0; /* Menempatkannya di bagian atas modal */
-    left: 0; /* Menempatkannya di bagian kiri modal */
-    margin: 15px; /* Menambahkan jarak dari tepi modal */
-    font-size: 28px;
-    font-weight: bold;
+	position: absolute;
+	/* Mengatur posisi absolut untuk menempatkannya di luar konten */
+	top: 0;
+	/* Menempatkannya di bagian atas modal */
+	left: 0;
+	/* Menempatkannya di bagian kiri modal */
+	margin: 15px;
+	/* Menambahkan jarak dari tepi modal */
+	font-size: 28px;
+	font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .image-info {
-    display: flex;
+	display: flex;
 }
 
 #modal-image {
-    width: 50%; /* Sesuaikan lebar gambar sesuai kebutuhan */
-    margin-right: 20px; /* Tambahkan jarak antara gambar dan info */
+	width: 50%;
+	/* Sesuaikan lebar gambar sesuai kebutuhan */
+	margin-right: 20px;
+	/* Tambahkan jarak antara gambar dan info */
 }
 
 .info {
-    flex: 1; /* Mengambil sisa ruang */
+	flex: 1;
+	/* Mengambil sisa ruang */
 }
 
-/* Style untuk formulir komentar */
-#comment-form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+.container-table {
+	margin-top: 50px;
 }
 
-#comment {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
+table {
+	border-collapse: collapse;
+	/* Menggabungkan garis-garis antar sel */
+	width: 100%;
 }
 
-#comment:focus {
-    outline: none;
-    border-color: #3d81c2;
+th,
+td {
+	border: 1px solid #dddddd;
+	/* Menambahkan garis pada setiap sel */
+	text-align: left;
+	padding: 8px;
 }
 
-#comment::placeholder {
-    color: #ccc;
-}
-
-button[type="submit"] {
-    padding: 10px 20px;
-    background-color: #3d81c2;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #0056b3;
+tr:nth-child(even) {
+	background-color: #f2f2f2;
 }
