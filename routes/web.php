@@ -4,6 +4,7 @@ use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KomentarFotoController;
@@ -28,12 +29,17 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/', [LoginController::class, 'login'])->name('/');
     Route::post('login', [LoginController::class, 'postLogin'])->name('postLogin');
     Route::post('register', [LoginController::class, 'postRegister'])->name('postRegister');
-    
+    Route::get('/admin/function', [LoginController::class, 'adminFunction'])->name('admin.function');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('dashboard');
 });
 
 Route::middleware(['auth'])->group(function () {
     //home
     Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('detailFoto/{id}', [HomeController::class, 'show'])->name('detailFoto');
     Route::get('/pelaporan-foto/export/{id}', [HomeController::class, 'pelaporan'])->name('pelaporan-foto.export');
 
     //end home
@@ -69,7 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pelaporan/{id}', [BlogController::class, 'index'])->name('pelaporan');
 
     //profile
-    Route::get('profilegallery', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('profilegallery/{username}', [ProfileController::class, 'profile'])->name('profile');
     Route::get('editProfile', [ProfileController::class, 'edit'])->name('edit');
     //end prprofile
     Route::get('actionLogout', [LoginController::class, 'actionLogout'])->name('actionLogout');

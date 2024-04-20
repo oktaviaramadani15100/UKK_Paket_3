@@ -145,6 +145,20 @@
             display: inline-block;
             vertical-align: top;
         }
+
+        .komentar-content a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .album-info a{
+            color: inherit;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -160,6 +174,9 @@
             <div class="gambar-info">
                 <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
                 <div class="album-info">
+                    <p>Uploaded by: <a
+                            href="{{ route('profile', ['username' => $foto->user->username]) }}">{{ $foto->user->username }}</a>
+                    </p>
                     <h3>{{ $foto->JudulFoto }}</h3>
                     <p>{{ $foto->DeskripsiFoto }}</p>
                 </div>
@@ -169,8 +186,11 @@
                 @foreach ($komentar as $komen)
                     <div class="komentar-card">
                         <div class="komentar-content">
-                            <h1>{{ $komen->user->nama_lengkap }} :</h1>
+                            <a href="{{ route('profile', ['username' => $komen->user->username]) }}">
+                                {{ $komen->user->nama_lengkap }}
+                            </a> :
                             <p class="posted-by">{{ $komen->IsiKomentar }}</p>
+                            <p>{{ $komen->TanggalKomentar }}</p>
                             <img class="hapus" src="{{ asset('images/delete.png') }}" alt=""
                                 onclick="deleteComent({{ $komen->id }})">
                         </div>

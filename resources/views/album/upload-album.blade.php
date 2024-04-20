@@ -58,7 +58,7 @@
                                 <ul class="menu-area-main">
                                     <li> <a href="home">Home</a> </li>
                                     <li class="active"> <a href="album">Upload</a> </li>
-                                    <li> <a href="profilegallery">Profile</a></li>
+                                    <li> <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -82,7 +82,9 @@
                 </div>
 
                 <div class="profile-picture">
-                    <p>{{ session('user_initial') }}</p>
+                    <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">
+                        <p>{{ session('user_initial') }}</p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -148,15 +150,6 @@
         </div>
 
 
-        <div class="input-container" id="foto_user_id_container">
-            <label for="user_id">User_id</label>
-            <select name="user_id" id="user_id">
-                @foreach ($user as $id => $username)
-                    <option value="{{ $id }}">{{ $username }}</option>
-                @endforeach
-            </select>   
-        </div>
-
         <div class="button-container" id="button-container" style="display: none;">
             <input type="submit" class="btn">
         </div>
@@ -199,7 +192,6 @@
                     document.getElementById('judul-container').style.display = 'block';
                     document.getElementById('deskripsi-container').style.display = 'block';
                     document.getElementById('button-container').style.display = 'block';
-                    document.getElementById('foto_user_id_container').style.display = 'block';
 
 
                     // Membaca file gambar menggunakan FileReader

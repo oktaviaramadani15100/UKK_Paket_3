@@ -81,4 +81,11 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    public function adminFunction()
+    {
+        if (Auth::user()->role != 'admin') {
+            abort(403, 'Unauthorized');
+        }
+    }
 }

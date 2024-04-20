@@ -25,11 +25,11 @@ class LikeFotoController extends Controller
             'user_id' => $userId,
             'TanggalDate' => now(),
         ]);
-        $totalLikes = LikeFoto::where('foto_id', $fotoId)->count(); // Menghitung total like setelah like
+        $totalLikes = LikeFoto::where('foto_id', $fotoId)->count(); 
         return response()->json(['status' => 'liked', 'total_likes' => $totalLikes]);
     } else {
         $like->delete();
-        $totalLikes = LikeFoto::where('foto_id', $fotoId)->count(); // Menghitung total like setelah unlike
+        $totalLikes = LikeFoto::where('foto_id', $fotoId)->count(); 
         return response()->json(['status' => 'unliked', 'total_likes' => $totalLikes]);
     }
 }

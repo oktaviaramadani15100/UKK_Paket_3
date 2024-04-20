@@ -103,12 +103,16 @@
             display: inline-block;
             vertical-align: top;
         }
+
+        .details h1 {
+            font-size: 15px;
+        }
     </style>
 </head>
 
 <body>
     <div class="logo-back">
-        <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">
+        <a href="{{ route('home') }}">
             <h1>Back</h1>
         </a>
     </div>
@@ -116,22 +120,25 @@
     <div class="container-detail">
         <div class="card-detail">
             <div class="image">
-                <img src="{{ asset('upload/' . $album->foto) }}" alt="">
+                <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
             </div>
             <div class="details">
-                <h2>{{ $album->NamaAlbum }}</h2>
-                <p>{{ $album->Deskripsi }}</p>
+              <a href="{{ route('profile', ['username' => $foto->user->username]) }}"><h1 style="margin-left: 130px">@ {{ $foto->user->nama_lengkap }}</h1></a>  
+                <h2>{{ $foto->JudulFoto }}</h2>
+                <p>{{ $foto->DeskripsiFoto }}</p>
+                <p>{{ $foto->TanggalUngguh }}</p>
             </div>
         </div>
 
+        @foreach ($fotos as $item)
+            <div class="image">
+                <img
+                src="{{ asset('upload/' . $item->foto) }}" alt=""
+                style="width: 200px; margin-left:65px; margin-top: 30px">
+            </div>
+        @endforeach
 
-        <div class="card-container">
-            @foreach ($fotos as $foto)
-                <div class="card">
-                    <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
-                </div>
-            @endforeach
-        </div>
+
 
     </div>
 

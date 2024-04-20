@@ -62,4 +62,6 @@ class KomentarFotoController extends Controller
         // Berikan respons sukses
         return response()->json(['success' => 'Komentar berhasil dihapus.']);
     }
+
+
 }

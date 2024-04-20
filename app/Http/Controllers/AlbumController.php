@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\PelaporanExport;
 use App\Models\Foto;
 use App\Models\User;
 use App\Models\Album;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Row;
+use Illuminate\Http\Request;
+use App\Exports\PelaporanExport;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AlbumController extends Controller
 {
@@ -27,7 +28,6 @@ class AlbumController extends Controller
                 'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'judul_album' => 'required|string|max:255',
                 'deskripsi_album' => 'nullable|string',
-                'user_id' => 'required|exists:users,id',
             ]);
 
             if ($request->hasFile('foto')) {
@@ -39,11 +39,11 @@ class AlbumController extends Controller
                 $data->NamaAlbum = $request->judul_album;
                 $data->Deskripsi = $request->deskripsi_album;
                 $data->TanggalDibuat = now();
-                $data->user_id = $request->user_id;
+                $data->user_id = auth()->user()->id;
 
                 $data->save();
 
-                return redirect('profilegallery')->with('success', 'Foto berhasil diunggah');
+                return redirect()->route('profile', ['username' => Auth::user()->username])->with('success', 'Foto berhasil diunggah');
             } else {
                 return back()->withInput()->withErrors(['error' => 'File tidak ditemukan']);
             }

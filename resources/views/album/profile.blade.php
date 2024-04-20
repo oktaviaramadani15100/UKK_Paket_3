@@ -15,15 +15,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- bootstrap css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- style css -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- Responsive-->
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <!-- fevicon -->
     <link rel="icon" href="images/fevicon.png" type="image/gif" />
     <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}">
     <!-- Tweaks for older IEs-->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
@@ -36,7 +36,7 @@
 <body class="main-layout">
     <!-- loader  -->
     <div class="loader_bg">
-        <div class="loader"><img src="images/loading.gif" alt="#" /></div>
+        <div class="loader"><img src="{{ asset('images/loading.gif') }}" alt="#" /></div>
     </div>
     <!-- end loader -->
     <!-- header -->
@@ -47,7 +47,8 @@
             <div class="row">
                 <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                     <div class="logo-area">
-                        <img src="images/logoJudul.png" alt="Logo" style="width: 200px;">
+                        <img src="{{ asset('images/logoJudul.png') }}" alt="Logo" style="width: 200px;">
+
                     </div>
                 </div>
                 <div class="col-xl-7 col-lg-7 col-md-9 col-sm-9">
@@ -55,9 +56,9 @@
                         <div class="limit-box">
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
-                                    <li> <a href="home">Home</a> </li>
-                                    <li> <a href="album">Upload</a> </li>
-                                    <li class="active"> <a href="profilegallery">Profile</a></li>
+                                    <li> <a href="{{ route('home') }}">Home</a> </li>
+                                    <li> <a href="{{ route('album') }}">Upload</a> </li>
+                                    <li class="active"> <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -81,8 +82,12 @@
                 </div>
 
                 <div class="profile-picture">
-                    <p>{{ session('user_initial') }}</p>
+                    <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">
+                        <p>{{ session('user_initial') }}</p>
+                    </a>
                 </div>
+
+
             </div>
         </div>
         <!-- end header inner -->
@@ -90,44 +95,47 @@
     <!-- end header -->
     <div class="container-profile">
         <div class="profile">
-            <img src="images/user.png" alt="">
+            <img src="{{ asset('images/user.png') }}" alt="">
         </div>
-            <span class="profile-name">{{ Auth::user()->username }}</span>
-            <span class="profile-email">{{ Auth::user()->email }}</span>
+        <span class="profile-name">{{ $user->username }}</span>
+        <span class="profile-email">{{ $user->email }}</span>
 
         <div class="upload-profile">
             <span>Upload</span>
         </div>
 
-    <div class="card-album-prpfile">
-        <div class="album-profile">
-            @foreach ($datas as $items)
-                <div class="card">
-                    <a href="{{ route('detail', ['id' => $items->id]) }}"><img src="{{ asset('upload/' . $items->foto) }}" alt="" style="width: 200px; margin-left:65px; margin-top: 30px"></a>
-                    <div class="intro">
-                        <h1>{{ $items->NamaAlbum }}</h1>
-                        <a href="{{ route('laporan.export',  $items->id) }}" download="pelapor.xlsx">
-                            <img class="excel" src="images/excel.png" alt="Excel Icon">
-                        </a>
+        <div class="card-album-prpfile">
+            <div class="album-profile">
+                @foreach ($datas as $items)
+                    <div class="card">
+                        <a href="{{ route('detail', ['id' => $items->id]) }}"><img
+                                src="{{ asset('upload/' . $items->foto) }}" alt=""
+                                style="width: 200px; margin-left:65px; margin-top: 30px"></a>
+                        <div class="intro">
+                            <h1>{{ $items->NamaAlbum }}</h1>
+                            <a href="{{ route('laporan.export', $items->id) }}" download="pelapor.xlsx">
+                                <img class="excel" src="{{ asset('images/excel.png') }}" alt="Excel Icon">
+                            </a>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
-    
+
 
     <br>
     <br>
     <!-- Javascript files-->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery-3.0.0.min.js"></script>
-    <script src="js/plugin.js"></script>
-    <!-- sidebar -->
-    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ asset('js/plugin.js') }}"></script>
+    <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $(".fancybox").fancybox({

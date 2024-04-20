@@ -69,8 +69,11 @@
                 </div>
 
                 <div class="profile-picture">
-                    <p>{{ session('user_initial') }}</p>
+                    <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">
+                        <p>{{ session('user_initial') }}</p>
+                    </a>
                 </div>
+                
             </div>
         </div>
         <!-- end header inner -->

@@ -67,7 +67,7 @@
                 </div>  
 
                 <div class="input-field">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-user"></i>
                     <input type="text" placeholder="Nama Lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}">
                     @error('nama_lengkap')
                         <span class="text-danger">{{ $message }}</span>
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="input-field">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-location"></i>
                     <input type="text" placeholder="Alamat" name="alamat" value="{{ old('alamat') }}">
                     @error('alamat')
                         <span class="text-danger">{{ $message }}</span>

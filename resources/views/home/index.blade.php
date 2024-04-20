@@ -58,7 +58,9 @@
                                 <ul class="menu-area-main">
                                     <li class="active"> <a href="home">Home</a> </li>
                                     <li> <a href="uploadGallery">Upload</a> </li>
-                                    <li> <a href="profilegallery">Profile</a></li>
+                                    <li> <a
+                                            href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -83,7 +85,9 @@
 
 
                 <div class="profile-picture">
-                    <p>{{ session('user_initial') }}</p>
+                    <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">
+                        <p>{{ session('user_initial') }}</p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -159,26 +163,30 @@
         <div class="grid-wrapper" style="margin-left: 130px">
             @foreach ($data as $row)
                 <div class="card">
-                    <img class="foto-file" src="{{ asset('upload/' . $row->LokasiFIle) }}" alt=""
-                        style="width: 200px; display: block; margin: 0 auto; margin-top: 20px">
+                    <a href="{{ route('detailFoto', ['id' => $row->id]) }}">
+                        <img class="foto-file" src="{{ asset('upload/' . $row->LokasiFIle) }}" alt=""
+                             style="width: 200px; display: block; margin: 0 auto; margin-top: 20px;">
+                    </a>                    
                     <div class="intro">
-                        <h1>{{ $row->JudulFoto }}</h1>
+                        <h1>{{ $row->user->username }}</h1>
                         <div class="actions">
                             <img class="like" src="images/like.png" alt=""
                                 onclick="toggleLike(this, {{ $row->id }}, {{ auth()->id() }})">
                             <span class="like-count like-count-{{ $row->id }}">{{ $row->total_likes }}</span>
-
-
                             <a href="{{ route('tampilanKomentar', ['id' => $row->id]) }}" class="komentar-link">
                                 <img class="komen" src="images/coment.png" alt="">
                             </a>
                             <span class="total-komentar">{{ $row->total_komentar }}</span>
-                            <img class="hapus" src="images/delete.png" alt=""
-                                onclick="deleteImage({{ $row->id }})">
+                            @if (Auth::check() && Auth::user()->id == $row->user_id)
+                                <img class="hapus" src="images/delete.png" alt=""
+                                    onclick="deleteImage({{ $row->id }})">
+                            @endif
+
                             <a href="{{ route('pelaporan-foto.export', $row->id) }}">
                                 <img class="excel-foto" src="images/excel.png" alt="">
                             </a>
                         </div>
+                        <p>{{ $row->JudulFoto }}</p>
                         <br>
                     </div>
                 </div>

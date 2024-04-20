@@ -183,11 +183,13 @@ a{
     /* color: #fff; */
     transition: 1.1s ease-in-out;
     transition-delay: 0.5s;
+    color: white;
 }
 
 .panel h3{
     font-size: 24px;
     font-weight: 600;
+
 }
 
 .panel p{
