@@ -92,6 +92,7 @@
             display: flex;
             flex-wrap: wrap;
             margin-top: 20px;
+            margin-top: 50px
         }
 
         .other-images .image {

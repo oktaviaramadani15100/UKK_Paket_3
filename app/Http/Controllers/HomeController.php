@@ -33,8 +33,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $aktivitas = "menampilakan home";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         $data = Foto::all();
-        
         return view('home.index', compact('data'));
     }
 
@@ -49,6 +55,12 @@ class HomeController extends Controller
         $foto = Foto::findOrFail($id);
         $fotos = Album::with('foto')->where('user_id',$foto->user_id)->get();
 
+        $aktivitas = "menampilkan detail foto";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
 
         return view('home.detail-foto', compact('foto','fotos'));
     }

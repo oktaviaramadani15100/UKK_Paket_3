@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foto;
+use App\Models\Laporan;
 use App\Models\KomentarFoto;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Database\QueryException;
 
 class KomentarFotoController extends Controller
 {
     public function index()
     {
+        $aktivitas = "menampilkan home komentar";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         $komentarfoto = KomentarFoto::get();
         return view('home.index', compact('komentarfoto'));
     }
@@ -33,6 +41,14 @@ class KomentarFotoController extends Controller
             $comment->TanggalKomentar = now();
             $comment->save();
 
+            $aktivitas = "data komentar berhasil di upload";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
+
             return back()->with('success', 'Komentar berhasil disimpan');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan komentar']);
@@ -41,6 +57,13 @@ class KomentarFotoController extends Controller
 
     public function tampilan($id)
     {
+        $aktivitas = "menampilkan taampilan komentar";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         $foto = Foto::find($id);
         $komentar = KomentarFoto::where('foto_id', $id)->get();
         return view('komentar.tampilan-komentar', compact('foto', 'id', 'komentar'));
@@ -48,13 +71,20 @@ class KomentarFotoController extends Controller
 
     public function delete(Request $request, $id)
     {
-        // Temukan komentar yang hendak dihapus
         $komentar = KomentarFoto::findOrFail($id);
         
         // Periksa apakah pengguna yang terautentikasi adalah pemilik komentar
         if ($komentar->user_id !== Auth::id()) {
             return response()->json(['error' => 'Anda tidak memiliki izin untuk menghapus komentar ini.'], 403);
         }
+
+        $aktivitas = "data komentar berhasil di hapus";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         
         // Hapus komentar
         $komentar->delete();

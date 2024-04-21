@@ -17,6 +17,13 @@ class FotoController extends Controller
     {
         $foto = Foto::get();
         $albums = Album::pluck('NamaAlbum', 'id');
+        $aktivitas = "masuk tampilan upload foto";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         return view('home.product', compact('foto', 'albums'));
     }
 
@@ -48,7 +55,7 @@ class FotoController extends Controller
                 $data->user_id = auth()->user()->id;
                 $data->save();
 
-                $aktivitas = "User Berhasil Login";
+                $aktivitas = "data foto berhasil di upload";
 
                 Laporan::create([
                     'user_id' => Auth::id(),
@@ -79,6 +86,14 @@ class FotoController extends Controller
 
         $like = LikeFoto::where('foto_id', $fotoId)->where('user_id', $userId)->first();
 
+        $aktivitas = "like berhasil";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
+
         if (!$like) {
             LikeFoto::create([
                 'foto_id' => $fotoId,
@@ -94,6 +109,15 @@ class FotoController extends Controller
     public function delete(Request $request, $id)
 {
     $gambar = Foto::find($id);
+
+    $aktivitas = "gambar dan data berhasil di hapus";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
+
     if (!$gambar) {
         return response()->json(['error' => 'Gambar tidak ditemukan.'], 404);
     }

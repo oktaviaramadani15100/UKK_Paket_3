@@ -87,6 +87,14 @@ class LoginController extends Controller
 
     public function actionLogout()
     {
+
+        $aktivitas = "data berhasil logout";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         Auth::logout();
         return redirect('/');
     }

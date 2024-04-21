@@ -19,6 +19,13 @@ class AlbumController extends Controller
     {
         $album = Album::get();
         $user = User::pluck('username', 'id');
+        $aktivitas = "masuk tampilan upload album";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         return view('album.upload-album', compact('album', 'user'));
     }
 
@@ -43,7 +50,7 @@ class AlbumController extends Controller
                 $data->user_id = auth()->user()->id;
                 $data->save();
 
-                $aktivitas = "Tambah Album Berhasil";
+                $aktivitas = "data album berhasil di upload";
 
                 Laporan::create([
                     'user_id' => Auth::id(),
@@ -67,6 +74,14 @@ class AlbumController extends Controller
     public function detail($id)
     {
         $album = Album::find($id);
+
+        $aktivitas = "masuk ke tampilan detail";
+
+        Laporan::create([
+            'user_id' => Auth::id(),
+            'aktivitas' => $aktivitas,
+        ]);
+
         if ($album) {
             $fotos = Foto::where('album_id', $album->id)->get();
 

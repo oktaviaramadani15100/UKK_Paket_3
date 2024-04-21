@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Laporan;
 use App\Models\LikeFoto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LikeFotoController extends Controller
 {
     public function index()
     {
+        $aktivitas = "tampilan home like";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
         $likefoto = LikeFoto::get();
         return view('home.index', compact('likefoto'));
     }
@@ -18,6 +27,14 @@ class LikeFotoController extends Controller
     $userId = $request->user_id;
 
     $like = LikeFoto::where('foto_id', $fotoId)->where('user_id', $userId)->first();
+
+    $aktivitas = "menampilkan data like";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
+
 
     if (!$like) {
         LikeFoto::create([
