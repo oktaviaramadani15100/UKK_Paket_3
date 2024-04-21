@@ -6,76 +6,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
+        body {
+            background-color: #f0f0f0;
+            /* Ubah warna latar belakang */
+            font-family: Arial, sans-serif;
+            /* Ganti jenis font */
+            color: #333;
+            /* Warna teks utama */
+        }
+
         .container-detail {
             display: flex;
             flex-direction: column;
-            margin-top: 20px
+            align-items: center;
+            /* Pusatkan horizontal */
+            margin-top: 50px;
         }
 
         .card-detail {
             display: flex;
-            width: 600px;
-            height: 300px;
+            width: 80%;
+            max-width: 800px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-            margin-left: 450px
+            margin-bottom: 30px;
         }
 
         .card-detail .image {
             flex: 1;
+            background-color: #ddd;
+            /* Warna latar belakang sementara */
         }
 
         .card-detail img {
-            width: 200px;
-            height: 200px;
-            margin-left: 50px;
-            margin-top: 40px
+            width: 300px;
+            height: 300px;
+            margin-left: 40px;
+            border-radius: 12px 0 0 12px;
+            /* Ubah radius sudut */
+            object-fit: cover;
+            /* Tampilkan gambar secara proporsional */
         }
 
         .card-detail .details {
             flex: 1;
             padding: 20px;
             box-sizing: border-box;
+            background-color: #fff;
+            /* Warna latar belakang */
         }
 
-        .card-detail .details h2 {
-            margin-top: 10px;
-            font-size: 30px;
+        .details h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
         }
 
-        .card-detail .details p {
-            margin-bottom: 0;
-            font-size: 18px
+        .details h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
         }
 
-        .card {
-            width: 250px;
-            height: 250px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            margin-left: 40px;
+        .details p {
+            font-size: 16px;
+            color: #666;
+            margin-top: 0;
         }
 
-        .card img {
-            width: 150px;
-            height: auto;
-            border-radius: 12px 12px 0 0;
-            margin-top: 50px;
-            margin-left: 50px;
-        }
 
         .card-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
-            padding: 10px;
-            margin-top: 50px;
+            gap: 20px;
+        }
+
+        .card {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            /* Animasi saat hover */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            /* Efek mengangkat sedikit saat hover */
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Tampilkan gambar secara proporsional */
+            transition: transform 0.3s ease;
+            /* Animasi saat hover */
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+            /* Efek memperbesar saat hover */
         }
 
 
@@ -85,6 +123,10 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            background-color: #ffffff;
+            margin-top: 20px;
+            margin-left: 20px;
+            text-decoration: none;
         }
 
         .logo-back:hover {
@@ -93,25 +135,15 @@
 
         .logo-back a {
             color: inherit;
-            /* Mengambil warna teks dari induknya */
             text-decoration: none;
-            /* Menghapus garis bawah */
-        }
-
-        .logo-back,
-        .container-detail {
-            display: inline-block;
-            vertical-align: top;
         }
     </style>
 </head>
 
 <body>
-    <div class="logo-back">
-        <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">
-            <h1>Back</h1>
-        </a>
-    </div>
+    <a class="logo-back" href="{{ route('profile', ['username' => Auth::user()->username]) }}">
+        <i class="fas fa-arrow-left"></i>
+    </a>
 
     <div class="container-detail">
         <div class="card-detail">
@@ -119,11 +151,11 @@
                 <img src="{{ asset('upload/' . $album->foto) }}" alt="">
             </div>
             <div class="details">
+                <h1>Uploaded by: {{ $album->user->nama_lengkap }}</h1>
                 <h2>{{ $album->NamaAlbum }}</h2>
                 <p>{{ $album->Deskripsi }}</p>
             </div>
         </div>
-
 
         <div class="card-container">
             @foreach ($fotos as $foto)
@@ -132,7 +164,6 @@
                 </div>
             @endforeach
         </div>
-
     </div>
 
 </body>

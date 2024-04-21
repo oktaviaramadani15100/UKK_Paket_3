@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->hasMany(LikeFoto::class);
     }
 
+    public function laporan()
+    {
+        return $this->hasMany(Laporan::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

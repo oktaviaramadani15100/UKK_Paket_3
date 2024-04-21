@@ -61,6 +61,7 @@
                                     <li> <a
                                             href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a>
                                     </li>
+                                    <li><a href="{{ route('exportPDF') }}">Laporan</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -133,31 +134,6 @@
         </div>
     </div>
 
-    {{-- <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div class="image-info">
-                <img id="modal-image" src="" alt="">
-                <div class="info">
-                    <h1 id="modal-album-name"></h1>
-                    <p id="modal-description"></p>
-
-                    <ul id="modal-comments">
-                        <!-- Komentar akan ditambahkan secara dinamis di sini menggunakan JavaScript -->
-                    </ul>
-                </div>
-            </div>
-            <form action="{{ route('storeKomentar') }}" method="POST" enctype="multipart/form-data" id="comment-form"
-                class="form-coment">
-                @csrf
-                <input type="hidden" name="foto_id" id="foto_id" value="" required />
-                <h2>Komentar</h2>
-                <input class="komen" type="text" name="isi_komentar" id="isi_komentar"
-                    placeholder="Tambahkan komentar" required />
-                <button type="submit">Kirim Komentar</button>
-            </form>
-        </div>
-    </div> --}}
 
     <div class="content-grid">
         <div class="grid-wrapper" style="margin-left: 130px">
@@ -166,9 +142,12 @@
                     <a href="{{ route('detailFoto', ['id' => $row->id]) }}">
                         <img class="foto-file" src="{{ asset('upload/' . $row->LokasiFIle) }}" alt=""
                              style="width: 200px; display: block; margin: 0 auto; margin-top: 20px;">
+                             <div class="overlay">
+                                <i class="fa fa-eye"></i>
+                            </div>
                     </a>                    
                     <div class="intro">
-                        <h1>{{ $row->user->username }}</h1>
+                        <h1><a href="{{ route('profile', ['username' => $row->user->username]) }}">{{ $row->user->username }}</a></h1>
                         <div class="actions">
                             <img class="like" src="images/like.png" alt=""
                                 onclick="toggleLike(this, {{ $row->id }}, {{ auth()->id() }})">
@@ -182,11 +161,8 @@
                                     onclick="deleteImage({{ $row->id }})">
                             @endif
 
-                            <a href="{{ route('pelaporan-foto.export', $row->id) }}">
-                                <img class="excel-foto" src="images/excel.png" alt="">
-                            </a>
+                
                         </div>
-                        <p>{{ $row->JudulFoto }}</p>
                         <br>
                     </div>
                 </div>

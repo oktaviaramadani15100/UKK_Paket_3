@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Laporan;
 use App\Models\User;
 use Nette\Utils\Image;
 use Illuminate\Http\Request;
@@ -35,6 +36,14 @@ class LoginController extends Controller
         if (Auth::attempt($infologin)) {
             $initial = strtoupper(substr(Auth::user()->username, 0, 1));
             session(['user_initial' => $initial]);
+
+            $aktivitas = "User Berhasil Login";
+
+            Laporan::create([
+                'user_id' => Auth::id(),
+                'aktivitas' => $aktivitas,
+            ]);
+
             return redirect('home')->with('sukses', 'berhasil');
         } else {
             return redirect('/');

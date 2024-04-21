@@ -37,4 +37,5 @@ class Foto extends Model
     {
         return $this->hasMany(LikeFoto::class);
     }
+
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KomentarFotoController;
 use App\Http\Controllers\LikeFotoController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UploadController;
@@ -41,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('detailFoto/{id}', [HomeController::class, 'show'])->name('detailFoto');
     Route::get('/pelaporan-foto/export/{id}', [HomeController::class, 'pelaporan'])->name('pelaporan-foto.export');
+   
 
     //end home
 
@@ -71,14 +73,13 @@ Route::middleware(['auth'])->group(function () {
     //end likefoto
 
 
-    //pelaporan
-    Route::get('pelaporan/{id}', [BlogController::class, 'index'])->name('pelaporan');
-
     //profile
     Route::get('profilegallery/{username}', [ProfileController::class, 'profile'])->name('profile');
     Route::get('editProfile', [ProfileController::class, 'edit'])->name('edit');
     //end prprofile
     Route::get('actionLogout', [LoginController::class, 'actionLogout'])->name('actionLogout');
+
+    Route::get('exportPDF', [PDFController::class, 'export'])->name('exportPDF');
 
 });
 

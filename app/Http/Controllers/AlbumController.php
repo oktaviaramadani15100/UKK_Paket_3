@@ -8,6 +8,7 @@ use App\Models\Album;
 use Maatwebsite\Excel\Row;
 use Illuminate\Http\Request;
 use App\Exports\PelaporanExport;
+use App\Models\Laporan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,8 +41,14 @@ class AlbumController extends Controller
                 $data->Deskripsi = $request->deskripsi_album;
                 $data->TanggalDibuat = now();
                 $data->user_id = auth()->user()->id;
-
                 $data->save();
+
+                $aktivitas = "Tambah Album Berhasil";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
 
                 return redirect()->route('profile', ['username' => Auth::user()->username])->with('success', 'Foto berhasil diunggah');
             } else {

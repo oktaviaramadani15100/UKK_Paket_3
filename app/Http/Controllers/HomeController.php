@@ -7,6 +7,10 @@ use App\Models\Album;
 use App\Models\LikeFoto;
 use Illuminate\Http\Request;
 use App\Exports\PelaporanFotoExport;
+use App\Models\Laporan;
+use App\Models\User;
+use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,6 +34,7 @@ class HomeController extends Controller
     public function index()
     {
         $data = Foto::all();
+        
         return view('home.index', compact('data'));
     }
 
@@ -47,4 +52,5 @@ class HomeController extends Controller
 
         return view('home.detail-foto', compact('foto','fotos'));
     }
+
 }

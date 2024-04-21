@@ -112,7 +112,7 @@
                                 src="{{ asset('upload/' . $items->foto) }}" alt=""
                                 style="width: 200px; margin-left:65px; margin-top: 30px"></a>
                         <div class="intro">
-                            <h1>{{ $items->NamaAlbum }}</h1>
+                            <h1>{{ $items->user->nama_lengkap }}</h1>
                             <a href="{{ route('laporan.export', $items->id) }}" download="pelapor.xlsx">
                                 <img class="excel" src="{{ asset('images/excel.png') }}" alt="Excel Icon">
                             </a>

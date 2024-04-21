@@ -58,7 +58,9 @@
                                 <ul class="menu-area-main">
                                     <li> <a href="home">Home</a> </li>
                                     <li class="active"> <a href="uploadGallery">Upload</a> </li>
-                                    <li> <a href="profilegallery">Profile</a></li>
+                                    <li> <a
+                                        href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a>
+                                </li>
                                 </ul>
                             </nav>
                         </div>

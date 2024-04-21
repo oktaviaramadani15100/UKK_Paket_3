@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Foto;
 use App\Models\Album;
+use App\Models\Laporan;
 use App\Models\LikeFoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -45,8 +46,14 @@ class FotoController extends Controller
                 $data->TanggalUngguh = now();
                 $data->album_id = $request->album_id;
                 $data->user_id = auth()->user()->id;
-                // Simpan data ke database
                 $data->save();
+
+                $aktivitas = "User Berhasil Login";
+
+                Laporan::create([
+                    'user_id' => Auth::id(),
+                    'aktivitas' => $aktivitas,
+                ]);
         
                 // Redirect dengan pesan sukses jika berhasil
                 return redirect('home')->with('success', 'Foto berhasil diunggah');
