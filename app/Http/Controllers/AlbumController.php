@@ -19,12 +19,6 @@ class AlbumController extends Controller
     {
         $album = Album::get();
         $user = User::pluck('username', 'id');
-        $aktivitas = "masuk tampilan upload album";
-
-                Laporan::create([
-                    'user_id' => Auth::id(),
-                    'aktivitas' => $aktivitas,
-                ]);
 
         return view('album.upload-album', compact('album', 'user'));
     }

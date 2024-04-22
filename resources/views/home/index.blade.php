@@ -61,7 +61,12 @@
                                     <li> <a
                                             href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a>
                                     </li>
-                                    <li><a href="{{ route('exportPDF') }}">Laporan</a></li>
+                                    <li>
+                                        <form action="{{ route('home') }}" method="GET">
+                                            <input type="search" id="search-data" name="search" placeholder="Search" style="margin-top: 30px; width: 300px">
+                                        </form>
+                                    </li>
+                                    
                                 </ul>
                             </nav>
                         </div>
@@ -147,7 +152,7 @@
                             </div>
                     </a>                    
                     <div class="intro">
-                        <h1><a href="{{ route('profile', ['username' => $row->user->username]) }}">{{ $row->user->username }}</a></h1>
+                        <h1>{{ $row->JudulFoto }}</h1>
                         <div class="actions">
                             <img class="like" src="images/like.png" alt=""
                                 onclick="toggleLike(this, {{ $row->id }}, {{ auth()->id() }})">
@@ -160,8 +165,6 @@
                                 <img class="hapus" src="images/delete.png" alt=""
                                     onclick="deleteImage({{ $row->id }})">
                             @endif
-
-                
                         </div>
                         <br>
                     </div>

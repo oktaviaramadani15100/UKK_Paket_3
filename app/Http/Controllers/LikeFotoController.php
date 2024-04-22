@@ -11,13 +11,6 @@ class LikeFotoController extends Controller
 {
     public function index()
     {
-        $aktivitas = "tampilan home like";
-
-                Laporan::create([
-                    'user_id' => Auth::id(),
-                    'aktivitas' => $aktivitas,
-                ]);
-
         $likefoto = LikeFoto::get();
         return view('home.index', compact('likefoto'));
     }

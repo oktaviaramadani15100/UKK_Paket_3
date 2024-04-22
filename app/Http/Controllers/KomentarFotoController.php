@@ -15,13 +15,6 @@ class KomentarFotoController extends Controller
 {
     public function index()
     {
-        $aktivitas = "menampilkan home komentar";
-
-                Laporan::create([
-                    'user_id' => Auth::id(),
-                    'aktivitas' => $aktivitas,
-                ]);
-
         $komentarfoto = KomentarFoto::get();
         return view('home.index', compact('komentarfoto'));
     }
@@ -57,7 +50,7 @@ class KomentarFotoController extends Controller
 
     public function tampilan($id)
     {
-        $aktivitas = "menampilkan taampilan komentar";
+        $aktivitas = "menampilkan tampilan komentar";
 
                 Laporan::create([
                     'user_id' => Auth::id(),

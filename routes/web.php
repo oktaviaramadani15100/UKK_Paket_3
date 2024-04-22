@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('detailFoto/{id}', [HomeController::class, 'show'])->name('detailFoto');
     Route::get('/pelaporan-foto/export/{id}', [HomeController::class, 'pelaporan'])->name('pelaporan-foto.export');
+
    
 
     //end home
@@ -50,6 +51,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('uploadGallery', [FotoController::class, 'upload'])->name('uploadGallery');
     Route::post('storeFotoGallery', [FotoController::class, 'store'])->name('storeFotoGallery');
     Route::delete('/delete/{id}', [FotoController::class, 'delete'])->name('delete');
+    Route::get('/edit/{id}', [FotoController::class, 'edit'])->name('editFoto');
+    Route::put('/update/{id}', [FotoController::class, 'update'])->name('updateFoto');
+
 
     //end upload
 
@@ -75,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
 
     //profile
     Route::get('profilegallery/{username}', [ProfileController::class, 'profile'])->name('profile');
-    Route::get('editProfile', [ProfileController::class, 'edit'])->name('edit');
+    
     //end prprofile
     Route::get('actionLogout', [LoginController::class, 'actionLogout'])->name('actionLogout');
 

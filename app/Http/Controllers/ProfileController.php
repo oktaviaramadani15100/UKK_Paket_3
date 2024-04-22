@@ -12,14 +12,7 @@ class ProfileController extends Controller
 {
     public function profile($username)
     {
-        $aktivitas = "menampilkan tampilan profile";
-
-                Laporan::create([
-                    'user_id' => Auth::id(),
-                    'aktivitas' => $aktivitas,
-                ]);
-
-
+        
         $user = User::where('username', $username)->firstOrFail();
         $datas = $user->album()->with('foto')->get();
         return view('album.profile', compact('user', 'datas'));

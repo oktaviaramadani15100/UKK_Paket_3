@@ -31,19 +31,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        $aktivitas = "menampilakan home";
+    public function index(Request $request)
+{   
+    $searchTerm = $request->input('search');
 
-                Laporan::create([
-                    'user_id' => Auth::id(),
-                    'aktivitas' => $aktivitas,
-                ]);
-
+    if ($searchTerm) {
+        $data = Foto::where('JudulFoto', 'LIKE', "%{$searchTerm}%")->get();
+    } else {
         $data = Foto::all();
-        return view('home.index', compact('data'));
     }
 
+    return view('home.index', compact('data'));
+}
+
+    
     public function pelaporan($id)
     {
         $laporan = Foto::findOrFail($id);

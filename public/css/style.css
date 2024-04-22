@@ -1656,7 +1656,7 @@ input[type="radio"] .styled:checked+label::after {
 	display: inline-block;
 	float: right;
 	color: white;
-	margin-top: 30px;
+	margin-top: 40px;
 	/* Sesuaikan jarak vertikal antara logo dan menu jika diperlukan */
 }
 
@@ -2545,6 +2545,13 @@ ul.lik li a:hover {
 	font-size: 20px;
 }
 
+
+.card .intro h2 {
+    margin-top: 10px; /* Sesuaikan jarak antara nama pengguna dan judul foto */
+    text-align: center; /* Sesuaikan penempatan judul foto */
+}
+
+
 .like {
 	margin-right: 5px;
 }
@@ -2628,6 +2635,10 @@ img {
 	/* Menyembunyikan input file */
 }
 
+.upload-input-album {
+	display: none;
+}
+
 .upload-label {
 	display: flex;
 	flex-direction: column;
@@ -2636,6 +2647,8 @@ img {
 	cursor: pointer;
 	margin-bottom: 20px;
 }
+
+
 
 .upload-icon {
 	font-size: 24px;
@@ -3104,5 +3117,50 @@ tr:nth-child(even) {
 
 .show {
     display: block;
+}
+
+.laporan {
+	color: white;
+	width: 150px;
+    background-color: #3d81c2;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+	margin-left: 60px;
+}
+
+.laporan li a{
+	color: white;
+}
+
+/* Styling for search form */
+li form {
+    display: flex;
+    align-items: center;
+}
+
+input[type="search"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+/* Styling for search icon */
+input[type="search"]::after {
+    content: '\1F50D'; /* Unicode for magnifying glass icon */
+    font-size: 18px;
+    margin-left: -30px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* Hide default search button */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
 }
 

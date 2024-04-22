@@ -59,8 +59,8 @@
                                     <li> <a href="home">Home</a> </li>
                                     <li class="active"> <a href="uploadGallery">Upload</a> </li>
                                     <li> <a
-                                        href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a>
-                                </li>
+                                            href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -75,7 +75,7 @@
                         <p>{{ session('user_initial') }}</p>
                     </a>
                 </div>
-                
+
             </div>
         </div>
         <!-- end header inner -->
@@ -87,7 +87,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="titlepage">
-                        <h2>Upload Our Foto</h2>
+                        <h2>Upload</h2>
                     </div>
                 </div>
             </div>
@@ -113,8 +113,11 @@
     </div>
 
     <!-- uploadGallery -->
+    <button id="toggle-upload" class="btn">Upload Foto</button>
+    <button id="toggle-album" class="btn">Upload Album</button>
 
-    <form action="{{ route('storeFotoGallery') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('storeFotoGallery') }}" method="POST" enctype="multipart/form-data" id="upload-form"
+        style="display: none;">
         @csrf
         <div class="upload-card">
             <label for="upload-input" class="upload-label">
@@ -128,31 +131,63 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="input-container" id="judul-container">
             <label for="judul_foto" class="input-label">Judul Foto</label>
             <input type="text" placeholder="Tambahkan Judul" name="judul_foto" id="judul_foto">
         </div>
-    
+
         <div class="input-container" id="deskripsi-container">
             <label for="deskripsi_foto" class="input-label">Deskripsi Foto</label>
             <input type="text" placeholder="Tambahkan Deskripsi" name="deskripsi_foto" id="deskripsi_foto">
         </div>
-    
+
         <div class="input-container" id="foto_album_id_container">
             <label for="album_id" class="input-label">Album_id</label>
             <select name="album_id" id="album_id">
-                @foreach ($albums as $id => $NamaAlbum)
+                @foreach ($userAlbums as $id => $NamaAlbum)
                     <option value="{{ $id }}">{{ $NamaAlbum }}</option>
                 @endforeach
             </select>
         </div>
-    
+
         <div class="button-container" id="button-container" style="display: none;">
             <input type="submit" class="btn">
         </div>
     </form>
-    
+
+    <form action="{{ route('storeAlbumGallery') }}" method="POST" enctype="multipart/form-data" id="buat-form"
+        style="display: none;">
+        @csrf
+        <div class="upload-card">
+            <label for="upload-input-album" class="upload-label">
+                <img src="images/down.png" alt="" class="upload-icon">
+                <span class="upload-text">Pilih file yang ingin diupload</span>
+            </label>
+            <input type="file" id="upload-input-album" class="upload-input-album" name="foto">
+            <div id="uploaded-album" style="display: none;">
+                <div class="image-container">
+                    <img id="uploaded-image-album" src="" alt="Uploaded Photo">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="input-container" id="nama-container" style="display: none;">
+            <label for="judul_foto">Nama Album</label>
+            <input type="text" placeholder="Tambahkan Judul" name="judul_album" id="judul_album">
+        </div>
+
+        <div class="input-container" id="deskripsi-album-container" style="display: none;">
+            <label for="deskripsi_foto">Deskripsi Album</label>
+            <input type="text" placeholder="Tambahkan Deskripsi" name="deskripsi_album" id="deskripsi_album">
+        </div>
+
+
+        <div class="button-container" id="submit-container" style="display: none;">
+            <input type="submit" class="btn">
+        </div>
+    </form>
 
 
 
@@ -184,9 +219,28 @@
                 $(this).removeClass('transition');
             });
 
+            // Get the button and form elements
+            var toggleUploadButton = document.getElementById('toggle-upload');
+            var toggleBuatdButton = document.getElementById('toggle-album');
+            var uploadForm = document.getElementById('upload-form');
+            var buatForm = document.getElementById('buat-form');
+
+            // Add click event listener to the button
+            toggleUploadButton.addEventListener('click', function() {
+                // Toggle the display of the upload form
+                uploadForm.style.display = (uploadForm.style.display === 'none') ? 'block' : 'none';
+            });
+
+            toggleBuatdButton.addEventListener('click', function() {
+                // Toggle the display of the upload form
+                buatForm.style.display = (buatForm.style.display === 'none') ? 'block' : 'none';
+            });
+
+
+
             //uploadGambar
             document.getElementById('upload-input').addEventListener('change', function() {
-                // Jika ada file yang dipilih
+                
                 if (this.files && this.files[0]) {
                     // Tampilkan input judul dan deskripsi
                     document.getElementById('judul-container').style.display = 'block';
@@ -200,6 +254,32 @@
                         $('#uploaded-image').attr('src', e.target
                             .result); // Set atribut src dari gambar
                         $('#uploaded-photo').show(); // Tampilkan div untuk gambar yang diunggah
+                    };
+                    reader.readAsDataURL(this.files[0]); // Membaca file gambar sebagai URL data
+                }
+
+                var albumId = document.getElementById('album_id').value;
+        if (!albumId) {
+            event.preventDefault(); // Mencegah form disubmit
+            alert('Harap pilih album sebelum mengunggah foto.');
+        }
+            });
+
+            document.getElementById('upload-input-album').addEventListener('change', function() {
+                // Jika ada file yang dipilih
+                if (this.files && this.files[0]) {
+                    // Tampilkan input judul dan deskripsi
+                    document.getElementById('nama-container').style.display = 'block';
+                    document.getElementById('deskripsi-album-container').style.display = 'block';
+                    document.getElementById('submit-container').style.display = 'block';
+
+
+                    // Membaca file gambar menggunakan FileReader
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#uploaded-image-album').attr('src', e.target
+                            .result);
+                        $('#uploaded-album').show(); // Tampilkan div untuk gambar yang diunggah
                     };
                     reader.readAsDataURL(this.files[0]); // Membaca file gambar sebagai URL data
                 }

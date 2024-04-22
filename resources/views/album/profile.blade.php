@@ -57,7 +57,7 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li> <a href="{{ route('home') }}">Home</a> </li>
-                                    <li> <a href="{{ route('album') }}">Upload</a> </li>
+                                    <li> <a href="{{ route('uploadGallery') }}">Upload</a> </li>
                                     <li class="active"> <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a></li>
                                 </ul>
                             </nav>
@@ -104,6 +104,10 @@
             <span>Upload</span>
         </div>
 
+        <div class="laporan">
+            <li><a href="{{ route('exportPDF') }}">Laporan</a></li>
+        </div>
+
         <div class="card-album-prpfile">
             <div class="album-profile">
                 @foreach ($datas as $items)
@@ -112,8 +116,9 @@
                                 src="{{ asset('upload/' . $items->foto) }}" alt=""
                                 style="width: 200px; margin-left:65px; margin-top: 30px"></a>
                         <div class="intro">
-                            <h1>{{ $items->user->nama_lengkap }}</h1>
+                            <h1>{{ $items->user->nama_lengkap }}</h1>                    
                         </div>
+
                     </div>
                 @endforeach
             </div>

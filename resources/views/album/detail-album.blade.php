@@ -11,18 +11,16 @@
     <style>
         body {
             background-color: #f0f0f0;
-            /* Ubah warna latar belakang */
             font-family: Arial, sans-serif;
-            /* Ganti jenis font */
             color: #333;
-            /* Warna teks utama */
+            margin: 0;
+            padding: 0;
         }
 
         .container-detail {
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Pusatkan horizontal */
             margin-top: 50px;
         }
 
@@ -39,17 +37,13 @@
         .card-detail .image {
             flex: 1;
             background-color: #ddd;
-            /* Warna latar belakang sementara */
         }
 
         .card-detail img {
-            width: 300px;
-            height: 300px;
-            margin-left: 40px;
+            width: 100%;
+            height: auto;
             border-radius: 12px 0 0 12px;
-            /* Ubah radius sudut */
             object-fit: cover;
-            /* Tampilkan gambar secara proporsional */
         }
 
         .card-detail .details {
@@ -57,7 +51,6 @@
             padding: 20px;
             box-sizing: border-box;
             background-color: #fff;
-            /* Warna latar belakang */
         }
 
         .details h1 {
@@ -68,7 +61,7 @@
         }
 
         .details h2 {
-            font-size: 20px;
+            font-size: 25px;
             font-weight: bold;
             color: #555;
             margin-bottom: 10px;
@@ -80,11 +73,11 @@
             margin-top: 0;
         }
 
-
         .card-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
+            justify-content: center;
         }
 
         .card {
@@ -94,28 +87,22 @@
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
-            /* Animasi saat hover */
         }
 
         .card:hover {
             transform: translateY(-5px);
-            /* Efek mengangkat sedikit saat hover */
         }
 
         .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Tampilkan gambar secara proporsional */
             transition: transform 0.3s ease;
-            /* Animasi saat hover */
         }
 
         .card:hover img {
             transform: scale(1.1);
-            /* Efek memperbesar saat hover */
         }
-
 
         .logo-back {
             display: inline-block;
@@ -154,6 +141,7 @@
                 <h1>Uploaded by: {{ $album->user->nama_lengkap }}</h1>
                 <h2>{{ $album->NamaAlbum }}</h2>
                 <p>{{ $album->Deskripsi }}</p>
+                <p>{{ $album->TanggalDibuat }}</p>
             </div>
         </div>
 
