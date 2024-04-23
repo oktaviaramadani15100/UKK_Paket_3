@@ -155,16 +155,12 @@
                         <h1>{{ $row->JudulFoto }}</h1>
                         <div class="actions">
                             <img class="like" src="images/like.png" alt=""
-                                onclick="toggleLike(this, {{ $row->id }}, {{ auth()->id() }})">
-                            <span class="like-count like-count-{{ $row->id }}">{{ $row->total_likes }}</span>
+                                onclick="toggleLike(this, {{ $row->id }}, {{ auth()?->user()?->id }})">
+                            <span class="like-count like-count-{{ $row->id }}">{{ $row->likeFoto()->count() }}</span>
                             <a href="{{ route('tampilanKomentar', ['id' => $row->id]) }}" class="komentar-link">
                                 <img class="komen" src="images/coment.png" alt="">
                             </a>
                             <span class="total-komentar">{{ $row->total_komentar }}</span>
-                            @if (Auth::check() && Auth::user()->id == $row->user_id)
-                                <img class="hapus" src="images/delete.png" alt=""
-                                    onclick="deleteImage({{ $row->id }})">
-                            @endif
                         </div>
                         <br>
                     </div>
@@ -237,85 +233,9 @@
 
 
 
-        function deleteImage(id) {
-            if (confirm("Apakah Anda yakin ingin menghapus gambar ini?")) {
-                $.ajax({
-                    url: '/delete/' + id,
-                    type: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        alert(response.success);
-                        location.reload(); // Ini akan me-refresh halaman saat ini
-                    },
-                    error: function(xhr, status, error) {
-                        var err = JSON.parse(xhr.responseText);
-                        alert(err.error);
-                    }
-                });
-            }
-        }
 
 
-        // // Open the modal with image details
-        // function openModal(albumName, description, fotoId) {
-        //     var modal = document.getElementById('modal');
-        //     var modalImage = document.getElementById('modal-image');
-        //     var modalAlbumName = document.getElementById('modal-album-name');
-        //     var modalDescription = document.getElementById('modal-description');
-        //     var fotoIdInput = document.getElementById('foto_id');
 
-        //     modalImage.src = event.target.src;
-        //     modalAlbumName.innerText = albumName;
-        //     modalDescription.innerText = description;
-
-        //     // Set nilai foto_id pada input tersembunyi
-        //     fotoIdInput.value = fotoId;
-
-        //     modal.style.display = 'block';
-        // }
-
-
-        // // Close the modal
-        // function closeModal() {
-        //     var modal = document.getElementById('modal');
-        //     modal.style.display = 'none';
-        // }
-
-        // // Close the modal when clicking outside of it
-        // window.onclick = function(event) {
-        //     var modal = document.getElementById('modal');
-        //     if (event.target == modal) {
-        //         modal.style.display = 'none';
-        //     }
-        // }
-
-        // // Fungsi untuk menangani pengiriman formulir komentar
-        // function handleSubmit(event) {
-        //     event.preventDefault(); // Menghentikan perilaku bawaan dari formulir
-
-        //     // Tangkap nilai komentar dari input formulir
-        //     var commentInput = document.getElementById('isi_komentar');
-        //     var commentText = commentInput.value;
-
-        //     // Buat elemen HTML baru untuk menampilkan komentar baru
-        //     var commentElement = document.createElement('li');
-        //     var commentTextNode = document.createTextNode(commentText);
-        //     commentElement.appendChild(commentTextNode);
-
-        //     // Temukan daftar komentar
-        //     var commentsList = document.getElementById('modal-comments');
-
-        //     // Tambahkan komentar baru ke dalam daftar komentar
-        //     commentsList.appendChild(commentElement);
-
-        //     // Kosongkan nilai input komentar setelah dikirim
-        //     commentInput.value = '';
-        // }
-
-        // // Event listener untuk formulir komentar
-        // document.getElementById('comment-form').addEventListener('submit', handleSubmit);
     </script>
 </body>
 

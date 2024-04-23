@@ -77,12 +77,14 @@
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: center;
+            justify-content: flex-start;
+            margin-left: 100px;
         }
 
         .card {
-            width: 200px;
-            height: 200px;
+            position: relative;
+            width: 300px;
+            height: 250px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -94,14 +96,66 @@
         }
 
         .card img {
-            width: 100%;
-            height: 100%;
+            width: 150px;
+            height: 150px;
             object-fit: cover;
             transition: transform 0.3s ease;
+            margin-left: 70px;
+            margin-top: 50px;
         }
+
 
         .card:hover img {
             transform: scale(1.1);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Ubah keinginan */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .overlay-content {
+            text-align: center;
+            color: #fff;
+            /* Warna teks */
+        }
+
+        .overlay-content h3 {
+            margin-bottom: 5px;
+        }
+
+        .overlay-content p {
+            margin-bottom: 10px;
+        }
+
+        .btn-view {
+            padding: 8px 16px;
+            background-color: #007bff;
+            /* Warna latar belakang tombol */
+            color: #fff;
+            /* Warna teks tombol */
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background-color: #0056b3;
+            /* Ubah warna saat tombol dihover */
         }
 
         .logo-back {
@@ -140,18 +194,29 @@
             <div class="details">
                 <h1>Uploaded by: {{ $album->user->nama_lengkap }}</h1>
                 <h2>{{ $album->NamaAlbum }}</h2>
-                <p>{{ $album->Deskripsi }}</p>
-                <p>{{ $album->TanggalDibuat }}</p>
+                <p>Description:{{ $album->Deskripsi }}</p>
+                <p>Uploaded on:{{ $album->TanggalDibuat }}</p>
+                <a href="{{ route('editAlbum', ['id' => $album->id]) }}" class="btn-edit">
+                    <i class="fas fa-edit"></i>
+                </a>
             </div>
         </div>
 
-        <div class="card-container">
-            @foreach ($fotos as $foto)
-                <div class="card">
-                    <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
+        
+    </div>
+
+    <div class="card-container">
+        @foreach ($fotos as $foto)
+            <div class="card">
+                <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
+                <div class="card-overlay">
+                    <div class="overlay-content">
+                        <h3>{{ $foto->JudulFoto }}</h3>
+                        <p>Uploaded Foto by: {{ $foto->user->nama_lengkap }}</p>
+                    </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
 
 </body>

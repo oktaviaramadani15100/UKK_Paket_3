@@ -113,16 +113,20 @@
     </div>
 
     <!-- uploadGallery -->
-    <button id="toggle-upload" class="btn">Upload Foto</button>
-    <button id="toggle-album" class="btn">Upload Album</button>
+    <div class="container-button-upload">
+        <div class="center-buttons">
+            <button id="toggle-upload" class="btn">Upload Foto</button>
+            <button id="toggle-album" class="btn">Buat Album</button>
+        </div>
+    </div>
 
     <form action="{{ route('storeFotoGallery') }}" method="POST" enctype="multipart/form-data" id="upload-form"
-        style="display: none;">
+        style="display: none; margin-top: 50px">
         @csrf
         <div class="upload-card">
             <label for="upload-input" class="upload-label">
                 <img src="images/down.png" alt="" class="upload-icon">
-                <span class="upload-text">Pilih file yang ingin diupload</span>
+                <span class="upload-text">Pilih file foto yang ingin di upload</span>
             </label>
             <input type="file" id="upload-input" class="upload-input" name="LokasiFIle">
             <div id="uploaded-photo" style="display: none;">
@@ -157,12 +161,12 @@
     </form>
 
     <form action="{{ route('storeAlbumGallery') }}" method="POST" enctype="multipart/form-data" id="buat-form"
-        style="display: none;">
+        style="display: none; margin-top: 50px;">
         @csrf
         <div class="upload-card">
             <label for="upload-input-album" class="upload-label">
                 <img src="images/down.png" alt="" class="upload-icon">
-                <span class="upload-text">Pilih file yang ingin diupload</span>
+                <span class="upload-text">Pilih file album yang ingin dibuat</span>
             </label>
             <input type="file" id="upload-input-album" class="upload-input-album" name="foto">
             <div id="uploaded-album" style="display: none;">
@@ -240,7 +244,7 @@
 
             //uploadGambar
             document.getElementById('upload-input').addEventListener('change', function() {
-                
+
                 if (this.files && this.files[0]) {
                     // Tampilkan input judul dan deskripsi
                     document.getElementById('judul-container').style.display = 'block';
@@ -259,10 +263,10 @@
                 }
 
                 var albumId = document.getElementById('album_id').value;
-        if (!albumId) {
-            event.preventDefault(); // Mencegah form disubmit
-            alert('Harap pilih album sebelum mengunggah foto.');
-        }
+                if (!albumId) {
+                    event.preventDefault(); // Mencegah form disubmit
+                    alert('Harap pilih album sebelum mengunggah foto.');
+                }
             });
 
             document.getElementById('upload-input-album').addEventListener('change', function() {

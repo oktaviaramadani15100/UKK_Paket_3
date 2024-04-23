@@ -10,112 +10,11 @@
 
     <style>
         body {
-            background-color: #f0f0f0;
-            /* Ubah warna latar belakang */
             font-family: Arial, sans-serif;
-            /* Ganti jenis font */
-            color: #333;
-            /* Warna teks utama */
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
         }
-
-        .container-detail {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* Pusatkan horizontal */
-            margin-top: 50px;
-        }
-
-        .card-detail {
-            display: flex;
-            width: 80%;
-            max-width: 800px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-
-        .card-detail .image {
-            flex: 1;
-            background-color: #ddd;
-            /* Warna latar belakang sementara */
-        }
-
-        .card-detail img {
-            width: 300px;
-            height: 300px;
-            margin-left: 40px;
-            border-radius: 12px 0 0 12px;
-            /* Ubah radius sudut */
-            object-fit: cover;
-            /* Tampilkan gambar secara proporsional */
-        }
-
-        .card-detail .details {
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-            background-color: #fff;
-            /* Warna latar belakang */
-        }
-
-        .details h1 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .details h2 {
-            font-size: 20px;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 10px;
-        }
-
-        .details p {
-            font-size: 16px;
-            color: #666;
-            margin-top: 0;
-        }
-
-
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .card {
-            width: 200px;
-            height: 200px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            /* Animasi saat hover */
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            /* Efek mengangkat sedikit saat hover */
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Tampilkan gambar secara proporsional */
-            transition: transform 0.3s ease;
-            /* Animasi saat hover */
-        }
-
-        .card:hover img {
-            transform: scale(1.1);
-            /* Efek memperbesar saat hover */
-        }
-
 
         .logo-back {
             display: inline-block;
@@ -133,39 +32,129 @@
             background-color: #a8a6a6;
         }
 
-        .logo-back a {
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-detail {
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .card-detail .image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-detail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .details {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .details h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .details p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .details a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .details a:hover {
+            text-decoration: underline;
+        }
+
+        .other-images {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            margin-top: 50px
+        }
+
+        .other-images .image {
+            width: calc(33.33% - 20px);
+            margin: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .other-images img {
+            max-width: 100%;
+            height: auto;
+
+        }
+
+        .profile-link {
             color: inherit;
             text-decoration: none;
+            transition: color 0.3s;
+            font-size: 20px;
+        }
+
+        .profile-link:hover {
+            color: #007bff;
         }
     </style>
 </head>
 
 <body>
-    <a class="logo-back" href="{{ route('profile', ['username' => Auth::user()->username]) }}">
+    <a href="{{ route('home') }}" class="logo-back">
         <i class="fas fa-arrow-left"></i>
     </a>
+    
 
-    <div class="container-detail">
+    <div class="container">
         <div class="card-detail">
             <div class="image">
-                <img src="{{ asset('upload/' . $album->foto) }}" alt="">
+                <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
             </div>
             <div class="details">
-                <h1>Uploaded by: {{ $album->user->nama_lengkap }}</h1>
-                <h2>{{ $album->NamaAlbum }}</h2>
-                <p>{{ $album->Deskripsi }}</p>
+                <h2>{{ $foto->JudulFoto }}</h2>
+                <p>Uploaded by: <a href="{{ route('profile', ['username' => $foto->user->username]) }}"
+                        class="profile-link">@ {{ $foto->user->nama_lengkap }}</a></p>
+                <p>Description: {{ $foto->DeskripsiFoto }}</p>
+                <p>Uploaded on: {{ $foto->TanggalUngguh }}</p>
+                <a href="{{ route('editFoto', ['id' => $foto->id]) }}" class="btn-edit">
+                    <i class="fas fa-edit"></i>
+                </a>
+                
+                
             </div>
         </div>
 
-        <div class="card-container">
-            @foreach ($fotos as $foto)
-                <div class="card">
-                    <img src="{{ asset('upload/' . $foto->LokasiFIle) }}" alt="">
+        <div class="other-images">
+            @foreach ($fotos as $item)
+                <div class="image">
+                    <img src="{{ asset('upload/' . $item->foto) }}" alt="">
                 </div>
             @endforeach
         </div>
     </div>
-
 </body>
 
 </html>

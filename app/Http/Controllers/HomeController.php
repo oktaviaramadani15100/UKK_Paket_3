@@ -32,19 +32,19 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
-{   
-    $searchTerm = $request->input('search');
+    {
+        $searchTerm = $request->input('search');
 
-    if ($searchTerm) {
-        $data = Foto::where('JudulFoto', 'LIKE', "%{$searchTerm}%")->get();
-    } else {
-        $data = Foto::all();
+        if ($searchTerm) {
+            $data = Foto::where('JudulFoto', 'LIKE', "%{$searchTerm}%")->get();
+        } else {
+            $data = Foto::all();
+        }
+
+        return view('home.index', compact('data'));
     }
 
-    return view('home.index', compact('data'));
-}
 
-    
     public function pelaporan($id)
     {
         $laporan = Foto::findOrFail($id);
@@ -54,16 +54,15 @@ class HomeController extends Controller
     public function show($id)
     {
         $foto = Foto::findOrFail($id);
-        $fotos = Album::with('foto')->where('user_id',$foto->user_id)->get();
+        $fotos = Album::with('foto')->where('user_id', $foto->user_id)->get();
 
         $aktivitas = "menampilkan detail foto";
 
-                Laporan::create([
-                    'user_id' => Auth::id(),
-                    'aktivitas' => $aktivitas,
-                ]);
+        Laporan::create([
+            'user_id' => Auth::id(),
+            'aktivitas' => $aktivitas,
+        ]);
 
-        return view('home.detail-foto', compact('foto','fotos'));
+        return view('home.detail-foto', compact('foto', 'fotos'));
     }
-
 }

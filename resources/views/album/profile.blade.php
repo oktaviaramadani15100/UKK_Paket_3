@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
         media="screen">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!--[if lt IE 9]>
        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -58,7 +59,9 @@
                                 <ul class="menu-area-main">
                                     <li> <a href="{{ route('home') }}">Home</a> </li>
                                     <li> <a href="{{ route('uploadGallery') }}">Upload</a> </li>
-                                    <li class="active"> <a href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a></li>
+                                    <li class="active"> <a
+                                            href="{{ route('profile', ['username' => Auth::user()->username]) }}">Profile</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -116,9 +119,10 @@
                                 src="{{ asset('upload/' . $items->foto) }}" alt=""
                                 style="width: 200px; margin-left:65px; margin-top: 30px"></a>
                         <div class="intro">
-                            <h1>{{ $items->user->nama_lengkap }}</h1>                    
+                            <h1>{{ $items->user->nama_lengkap }}</h1>
+                            <img class="hapus" src="{{ asset('images/delete.png') }}" alt=""
+                                onclick="deleteImage('{{ $items->id }}')" style="width: 40px">
                         </div>
-
                     </div>
                 @endforeach
             </div>
@@ -153,6 +157,26 @@
                 $(this).removeClass('transition');
             });
         });
+
+        function deleteImage(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus gambar ini?")) {
+                $.ajax({
+                    url: '/deleteAlbum/' + id,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert(response.success);
+                        location.reload(); // Ini akan me-refresh halaman saat ini
+                    },
+                    error: function(xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                        alert(err.error);
+                    }
+                });
+            }
+        }
     </script>
 </body>
 

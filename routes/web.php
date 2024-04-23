@@ -62,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('storeAlbumGallery', [AlbumController::class, 'store'])->name('storeAlbumGallery');
     Route::get('detail/{id}', [AlbumController::class, 'detail'])->name('detail');
     Route::get('/pelaporan/export/{id}', [AlbumController::class, 'pelaporan'])->name('laporan.export');
+    Route::get('editAlbum/{id}', [AlbumController::class, 'edit'])->name('editAlbum');
+    Route::put('updateAlbum/{id}', [AlbumController::class, 'update'])->name('updateAlbum');
     //end album
 
     //komentarfoto
@@ -79,6 +81,7 @@ Route::middleware(['auth'])->group(function () {
 
     //profile
     Route::get('profilegallery/{username}', [ProfileController::class, 'profile'])->name('profile');
+    Route::delete('/deleteAlbum/{id}', [ProfileController::class, 'delete'])->name('deleteAlbum');
     
     //end prprofile
     Route::get('actionLogout', [LoginController::class, 'actionLogout'])->name('actionLogout');

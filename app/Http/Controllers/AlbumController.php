@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
+use function PHPUnit\Framework\returnSelf;
+
 class AlbumController extends Controller
 {
     public function index()
@@ -85,9 +87,36 @@ class AlbumController extends Controller
         }
     }
 
-    public function pelaporan($id)
+    public function edit($id)
     {
-        $pelaporan = Album::findOrFail($id);
-        return Excel::download(new PelaporanExport($id), "pelapor.xlsx");
+        $album = Album::findOrFail($id);
+        return view('album.edit-album', compact('album'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi data yang diinput pengguna jika diperlukan
+        $request->validate([
+            'NamaAlbum' => 'required',
+            'DeskripsiAlbum' => 'required',
+            // Tambahkan validasi lainnya sesuai kebutuhan
+        ]);
+
+        // Temukan foto yang akan diupdate
+        $album = Album::findOrFail($id);
+
+        $album->NamaAlbum = $request->NamaAlbum;
+        $album->Deskripsi = $request->DeskripsiAlbum;
+
+        $album->save();
+
+        $aktivitas = "edit album berhasil";
+
+        Laporan::create([
+            'user_id' => Auth::id(),
+            'aktivitas' => $aktivitas,
+        ]);
+
+        return redirect()->route('detail', ['id' => $album->id])->with('success', 'Foto berhasil diperbarui');
     }
 }

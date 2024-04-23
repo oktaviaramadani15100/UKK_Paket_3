@@ -3164,3 +3164,14 @@ input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
 
+.container-button-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-buttons {
+    display: flex;
+    justify-content: center; /* Untuk menempatkan tombol-tombol di tengah horizontal */
+    gap: 10px; /* Jarak antara tombol-tombol */
+}
